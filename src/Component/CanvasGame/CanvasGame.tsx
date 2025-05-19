@@ -57,6 +57,28 @@ class Component {
     }
   }
 
+  crashWithPipe(pipe: Pipe) {
+    const birdLeft = this.x;
+    const birdRight = this.x + this.width;
+    const birdTop = this.y;
+    const birdBottom = this.y + this.height;
+
+    const pipeLeft = pipe.x;
+    const pipeRight = pipe.x + pipe.width;
+    const pipeTop = pipe.y;
+    const pipeBottom = pipe.y + pipe.height;
+
+    if (birdRight < pipeLeft || birdLeft > pipeRight) {
+        return false; 
+    }
+
+    if (pipe.isTopPipe) {
+        return birdBottom > pipeTop && birdTop < pipeBottom;
+    } else {
+        return birdTop < pipeBottom && birdBottom > pipeTop;
+    }
+}
+
   jump() {
     this.gravitySpeed = -2.8;
   }
@@ -76,7 +98,7 @@ function CanvasGame() {
     if (!ctx) return;
 
     gamePieceRef.current = new Component(
-      { width: 30, height: 30, x: 130, y: 150 },
+      { width: 40, height: 30, x: 130, y: 150 },
       ctx
     );
 
@@ -91,9 +113,8 @@ function CanvasGame() {
         piece.update();
       }
 
-
       if (frameCounter % 150 == 0) {
-        const gap = 100;
+        const gap = 150;
         const minHeight = 50;
         const maxHeight = 200;
         const topPipeHeight = Math.floor(
@@ -108,6 +129,7 @@ function CanvasGame() {
               height: topPipeHeight,
               x: canvas.width,
               y: 0,
+              isTopPipe:true,
               topImageSrc: ProjectImages.PIPE_TOP,
               bottomImageSrc: ProjectImages.PIPE_BOTTOM,
             },
@@ -122,6 +144,7 @@ function CanvasGame() {
               height: canvas.height - bottomPipeY,
               x: canvas.width,
               y: bottomPipeY,
+              isTopPipe:false,
               topImageSrc: ProjectImages.PIPE_TOP,
               bottomImageSrc: ProjectImages.PIPE_BOTTOM,
             },
@@ -130,12 +153,15 @@ function CanvasGame() {
         );
       }
 
+      let crashed = false;
       pipesRef.current.forEach((pipe) => {
         pipe.move();
-        pipe.draw();    
-      });
-    }, 9);
+        pipe.draw();
 
+        if (piece && piece.crashWithPipe(pipe)) crashed = true;
+      });
+      if (crashed) alert("game over");
+    }, 9);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -150,8 +176,8 @@ function CanvasGame() {
     <div className="canvas-wrapper">
       <canvas
         ref={canvasRef}
-        width={600}
-        height={400}
+        width={480}
+        height={640}
         style={{
           border: "1px solid #d3d3d3",
           backgroundColor: "#f1f1f1",
@@ -161,5 +187,4 @@ function CanvasGame() {
     </div>
   );
 }
-
 export default CanvasGame;
