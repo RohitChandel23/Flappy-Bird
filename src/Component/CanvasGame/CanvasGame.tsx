@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ProjectImages } from "../../assets/ProjectImages";
 import { Pipe } from "./Pipe/Pipe";
 import "./CanvasGame.css";
@@ -74,7 +74,9 @@ class Component {
 
     if (pipe.isTopPipe) {
       return birdBottom > pipeTop && birdTop < pipeBottom;
-    } else {
+    } 
+      
+    else {
       return birdTop < pipeBottom && birdBottom > pipeTop;
     }
   }
@@ -88,9 +90,7 @@ function CanvasGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gamePieceRef = useRef<Component | null>(null);
   const intervalRef = useRef<any | null>(null);
-  const pipesRef = useRef<Pipe[]>([]);
-
-  const [score, setScore] = useState()
+  const pipesRef = useRef<Pipe[]>([])
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -123,6 +123,9 @@ function CanvasGame() {
           Math.random() * (maxHeight - minHeight) + minHeight
         );
         const bottomPipeY = topPipeHeight + gap;
+
+        console.log(score);
+
 
         pipesRef.current.push(
           new Pipe(
@@ -176,7 +179,8 @@ function CanvasGame() {
   }, []);
 
   function handleClick() {
-    if (gamePieceRef.current) gamePieceRef.current.jump();
+    if (gamePieceRef.current) 
+      gamePieceRef.current.jump();
   }
 
   return (
