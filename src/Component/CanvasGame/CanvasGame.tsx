@@ -69,15 +69,15 @@ class Component {
     const pipeBottom = pipe.y + pipe.height;
 
     if (birdRight < pipeLeft || birdLeft > pipeRight) {
-        return false; 
+      return false;
     }
 
     if (pipe.isTopPipe) {
-        return birdBottom > pipeTop && birdTop < pipeBottom;
+      return birdBottom > pipeTop && birdTop < pipeBottom;
     } else {
-        return birdTop < pipeBottom && birdBottom > pipeTop;
+      return birdTop < pipeBottom && birdBottom > pipeTop;
     }
-}
+  }
 
   jump() {
     this.gravitySpeed = -2.8;
@@ -90,6 +90,8 @@ function CanvasGame() {
   const intervalRef = useRef<any | null>(null);
   const pipesRef = useRef<Pipe[]>([]);
 
+  const [score, setScore] = useState()
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -98,7 +100,7 @@ function CanvasGame() {
     if (!ctx) return;
 
     gamePieceRef.current = new Component(
-      { width: 40, height: 30, x: 130, y: 150 },
+      { width: 50, height: 40, x: 130, y: 150 },
       ctx
     );
 
@@ -113,9 +115,9 @@ function CanvasGame() {
         piece.update();
       }
 
-      if (frameCounter % 150 == 0) {
+      if (frameCounter % 250 == 0) {
         const gap = 150;
-        const minHeight = 50;
+        const minHeight = 80;
         const maxHeight = 200;
         const topPipeHeight = Math.floor(
           Math.random() * (maxHeight - minHeight) + minHeight
@@ -125,11 +127,11 @@ function CanvasGame() {
         pipesRef.current.push(
           new Pipe(
             {
-              width: 50,
+              width: 80,
               height: topPipeHeight,
               x: canvas.width,
               y: 0,
-              isTopPipe:true,
+              isTopPipe: true,
               topImageSrc: ProjectImages.PIPE_TOP,
               bottomImageSrc: ProjectImages.PIPE_BOTTOM,
             },
@@ -140,16 +142,16 @@ function CanvasGame() {
         pipesRef.current.push(
           new Pipe(
             {
-              width: 50,
+              width: 80,
               height: canvas.height - bottomPipeY,
               x: canvas.width,
               y: bottomPipeY,
-              isTopPipe:false,
+              isTopPipe: false,
               topImageSrc: ProjectImages.PIPE_TOP,
               bottomImageSrc: ProjectImages.PIPE_BOTTOM,
             },
             ctx
-          )
+          ) 
         );
       }
 
@@ -158,9 +160,14 @@ function CanvasGame() {
         pipe.move();
         pipe.draw();
 
-        if (piece && piece.crashWithPipe(pipe)) crashed = true;
+        if (piece && piece.crashWithPipe(pipe)) 
+          crashed = true;
       });
-      if (crashed) alert("game over");
+      if (crashed){ 
+        alert("game over");
+       clearInterval(intervalRef.current)
+        }
+
     }, 9);
 
     return () => {
@@ -177,13 +184,16 @@ function CanvasGame() {
       <canvas
         ref={canvasRef}
         width={480}
-        height={640}
+        height={530}
         style={{
           border: "1px solid #d3d3d3",
           backgroundColor: "#f1f1f1",
         }}
         onClick={handleClick}
       />
+      <div className="canvas-background" onClick = {handleClick}>
+        <img src={ProjectImages.BOTTOM_BG} />
+      </div>
     </div>
   );
 }
