@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ProjectImages } from "../../assets/ProjectImages";
 import { Pipe } from "./Pipe/Pipe";
-// import "@fontsource/press-start-2p";
+
 import "./CanvasGame.css";
 
 interface ClassComponentProps {
@@ -43,18 +43,19 @@ class Component {
     this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
-  newPos(canvasHeight: number) {
+  newPos(canvasHeight: number, hasCrashedRef:any) {
     this.gravitySpeed += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
-    this.hitBottom(canvasHeight);
+    this.hitBottom(canvasHeight, hasCrashedRef);
   }
 
-  hitBottom(canvasHeight: number) {
+  hitBottom(canvasHeight: number,hasCrashedRef:any) {
     const bottom = canvasHeight - this.height;
     if (this.y > bottom) {
       this.y = bottom;
       this.gravitySpeed = 0;
+      hasCrashedRef.current = true;
     }
   }
 
@@ -94,6 +95,7 @@ function CanvasGame() {
 
   const [score, setScore] = useState<number>(0);
   const [isGameover, setIsGameover] = useState<boolean>(false);
+  const hasCrashedRef = useRef<boolean>(false);
 
   function restartGame() {
     setScore(0);
@@ -112,6 +114,7 @@ function CanvasGame() {
     }
 
     setIsGameStarted(false);
+    hasCrashedRef.current = false;
   }
 
   useEffect(() => {
@@ -135,19 +138,19 @@ function CanvasGame() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const piece = gamePieceRef.current;
       if (piece) {
-        piece.newPos(canvas.height);
+        piece.newPos(canvas.height, hasCrashedRef);
         piece.update();
       }
 
       if (frameCounter % 310 == 0) {
         setScore((prev) => prev + 1);
-        console.log(score);
+        // console.log(score);
       }
 
       if (frameCounter % 250 == 0) {
         const gap = 150;
         const minHeight = 80;
-        const maxHeight = 200;
+        const maxHeight = 300;
         const topPipeHeight = Math.floor(
           Math.random() * (maxHeight - minHeight) + minHeight
         );
@@ -156,7 +159,7 @@ function CanvasGame() {
         pipesRef.current.push(
           new Pipe(
             {
-              width: 80,
+              width: 85,
               height: topPipeHeight,
               x: canvas.width,
               y: 0,
@@ -171,7 +174,7 @@ function CanvasGame() {
         pipesRef.current.push(
           new Pipe(
             {
-              width: 80,
+              width: 85,
               height: canvas.height - bottomPipeY,
               x: canvas.width,
               y: bottomPipeY,
@@ -184,6 +187,7 @@ function CanvasGame() {
         );
       }
 
+       console.log(hasCrashedRef.current)
       let crashed = false;
       pipesRef.current.forEach((pipe) => {
         pipe.move();
@@ -191,7 +195,7 @@ function CanvasGame() {
 
         if (piece && piece.crashWithPipe(pipe)) crashed = true;
       });
-      if (crashed) {
+      if (crashed || hasCrashedRef.current) {  
         setIsGameover((prev) => !prev);
         clearInterval(intervalRef.current);
       }
@@ -215,7 +219,7 @@ function CanvasGame() {
           <canvas
             ref={canvasRef}
             width={480}
-            height={530}
+            height={730}
             style={{
               border: "1px solid #d3d3d3",
               backgroundColor: "#f1f1f1",
