@@ -81,7 +81,7 @@ class Component {
   }
 
   jump() {
-    this.gravitySpeed = -2.8;
+    this.gravitySpeed = -2.9;
   }
 }
 
@@ -198,12 +198,14 @@ function CanvasGame() {
     }, 9);
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) 
+        clearInterval(intervalRef.current);
     };
   }, [isGameStarted]);
 
   function handleClick() {
-    if (gamePieceRef.current) gamePieceRef.current.jump();
+    if (gamePieceRef.current) 
+      gamePieceRef.current.jump();
   }
 
   return (
@@ -225,7 +227,7 @@ function CanvasGame() {
           </div>
 
           <div className="game-score">
-            <h4>Score: {score}</h4>
+            <h4>{score}</h4>
           </div>
           {isGameover && (
             <div className="game-over-modal">

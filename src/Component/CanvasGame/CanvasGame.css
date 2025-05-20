@@ -27,6 +27,7 @@ canvas {
   color:white;
   font-size: 20px;
   border-radius: 5px;
+  font-family: "Press Start 2P", system-ui;;
 }
 
 .canvas-background{
@@ -62,16 +63,17 @@ canvas {
   padding: 12px 24px;
   font-size: 20px;
   font-weight: bold;
-  background-color: #003772;
+  background-color: rgb(214, 101, 101);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: "Press Start 2P", system-ui;
 }
 
 .start-canvas button:hover {
-  background-color: #0056b3;
+  background-color: rgb(211, 74, 74);
 }
 
 .bird-container{
@@ -91,24 +93,29 @@ canvas {
 .game-over-modal{
   position: absolute;
   height: 200px;
-  width:200px;
+  width:225px;
   text-align: center;
-
+  padding:2%;
   border-radius: 4px;
   box-shadow: 20px 20px 40px grey;
   background-color: rgb(255, 255, 221);
-  font-family: Press Start 2P, monospace;
-
+  font-family: "Press Start 2P", system-ui;
 } 
 
+.game-over-modal h4{
+  margin-top: 13%;
+}
+
 .game-over-modal button{
-  font-size: 23px;
+  font-size: 19px;
   padding: 4% 7% 4% 7%;
+    font-family: "Press Start 2P", system-ui;
   background-color: lightcoral;
   color:white;
   border: none;
   border-radius:2px;
   cursor: pointer;
+  margin-top:12%;
 }
 
 .restart-button:hover{
