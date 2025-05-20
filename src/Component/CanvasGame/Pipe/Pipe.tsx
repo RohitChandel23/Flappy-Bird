@@ -17,7 +17,8 @@
         bottomImage: HTMLImageElement;
         ctx: CanvasRenderingContext2D;
         gap: number;
-        isTopPipe: boolean; 
+        isTopPipe: boolean;
+        scored: boolean;
       
         constructor(props: PipeProps, ctx: CanvasRenderingContext2D) {
           this.width = props.width;
@@ -32,6 +33,7 @@
           this.topImage.src = props.topImageSrc;
           this.bottomImage = new Image();
           this.bottomImage.src = props.bottomImageSrc;
+          this.scored = false;  
         }
       
         draw() {

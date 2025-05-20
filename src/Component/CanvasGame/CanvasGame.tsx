@@ -92,7 +92,6 @@ function CanvasGame() {
   const intervalRef = useRef<any | null>(null);
   const pipesRef = useRef<Pipe[]>([]);
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
-
   const [score, setScore] = useState<number>(0);
   const [isGameover, setIsGameover] = useState<boolean>(false);
   const hasCrashedRef = useRef<boolean>(false);
@@ -132,7 +131,6 @@ function CanvasGame() {
     );
 
     let frameCounter = 0;
-
     intervalRef.current = setInterval(() => {
       frameCounter++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -142,15 +140,15 @@ function CanvasGame() {
         piece.update();
       }
 
-      if (frameCounter % 310 == 0) {
-        setScore((prev) => prev + 1);
-        // console.log(score);
-      }
+      // if (frameCounter % 310 == 0) {
+      //   setScore((prev) => prev + 1);
+      //   // console.log(score);
+      // }
 
       if (frameCounter % 250 == 0) {
         const gap = 150;
-        const minHeight = 80;
-        const maxHeight = 300;
+        const minHeight = 150;
+        const maxHeight = 400;
         const topPipeHeight = Math.floor(
           Math.random() * (maxHeight - minHeight) + minHeight
         );
@@ -193,7 +191,15 @@ function CanvasGame() {
         pipe.move();
         pipe.draw();
 
-        if (piece && piece.crashWithPipe(pipe)) crashed = true;
+        if(!pipe.isTopPipe && !pipe.scored && gamePieceRef.current){
+          if(gamePieceRef.current.x > pipe.x + pipe.width){
+            setScore(prev => prev+1);
+            pipe.scored = true;
+          }
+        }
+
+        if (piece && piece.crashWithPipe(pipe)) 
+          crashed = true;
       });
       if (crashed || hasCrashedRef.current) {  
         setIsGameover((prev) => !prev);
@@ -265,6 +271,9 @@ function CanvasGame() {
 export default CanvasGame;
 
 
-//game start ****
-//game score -> score calculation , display
-//game over -> game over modal
+//game start ***
+//game over -> game over modal  ***
+//game score -> score calculation ***
+
+//on crash bird should fall to the ground
+//scoreboard -> username and score  

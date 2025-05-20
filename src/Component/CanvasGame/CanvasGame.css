@@ -61,7 +61,7 @@ canvas {
   padding: 12px 24px;
   font-size: 20px;
   font-weight: bold;
-  background-color: rgb(214, 101, 101);
+  background-color: rgb(211, 74, 74);
   color: white;
   border: none;
   border-radius: 8px;
@@ -71,7 +71,7 @@ canvas {
 }
 
 .start-canvas button:hover {
-  background-color: rgb(211, 74, 74);
+  background-color: rgb(192, 62, 62);
 }
 
 .bird-container{
@@ -106,18 +106,18 @@ canvas {
 
 .game-over-modal button{
   font-size: 19px;
-  padding: 4% 7% 4% 7%;
-    font-family: "Press Start 2P", system-ui;
-  background-color: lightcoral;
+  padding: 5% 8% 5% 8%;
+  font-family: "Press Start 2P", system-ui;
+  background-color: rgb(211, 74, 74);
   color:white;
   border: none;
-  border-radius:2px;
+  border-radius:8px;
   cursor: pointer;
   margin-top:12%;
 }
 
 .restart-button:hover{
-    background-color: rgb(222, 123, 123);
+    background-color: rgb(192, 62, 62);
 }
 
 
