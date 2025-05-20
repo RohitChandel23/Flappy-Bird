@@ -91,13 +91,20 @@ function CanvasGame() {
   const gamePieceRef = useRef<Component | null>(null);
   const intervalRef = useRef<any | null>(null);
   const pipesRef = useRef<Pipe[]>([])
+  
+  const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 
   useEffect(() => {
+    if(!isGameStarted)
+      return;
+
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) 
+      return;
 
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) 
+      return;
 
     gamePieceRef.current = new Component(
       { width: 50, height: 40, x: 130, y: 150 },
@@ -123,9 +130,6 @@ function CanvasGame() {
           Math.random() * (maxHeight - minHeight) + minHeight
         );
         const bottomPipeY = topPipeHeight + gap;
-
-        console.log(score);
-
 
         pipesRef.current.push(
           new Pipe(
@@ -168,7 +172,7 @@ function CanvasGame() {
       });
       if (crashed){ 
         alert("game over");
-       clearInterval(intervalRef.current)
+       clearInterval(intervalRef.current);
         }
 
     }, 9);
@@ -176,7 +180,7 @@ function CanvasGame() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, []);
+  }, [isGameStarted]);
 
   function handleClick() {
     if (gamePieceRef.current) 
@@ -184,7 +188,8 @@ function CanvasGame() {
   }
 
   return (
-    <div className="canvas-wrapper">
+    <>
+    {isGameStarted && <div className="canvas-wrapper">
       <canvas
         ref={canvasRef}
         width={480}
@@ -198,7 +203,27 @@ function CanvasGame() {
       <div className="canvas-background" onClick = {handleClick}>
         <img src={ProjectImages.BOTTOM_BG} />
       </div>
-    </div>
+    </div>}
+
+    {!isGameStarted &&
+    <div className='canvas-wrapper'>
+      <div className="start-canvas">
+        <img src={ProjectImages.BACKGROUND_IMAGE}/>
+        <div className="bird-container"><img src={ProjectImages.BIRD}/></div>
+        <button onClick = { ()=> setIsGameStarted(true)}>start</button>
+      </div>
+         <div className="canvas-background" onClick = {handleClick}>
+        <img src={ProjectImages.BOTTOM_BG} />
+      </div>
+      </div>}
+
+    </>
   );
+  
 }
 export default CanvasGame;
+
+
+//game start *
+//game over
+//game score
