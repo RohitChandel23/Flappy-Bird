@@ -68,8 +68,8 @@ canvas {
   height:40px;
   
   position: absolute;
-  top: 130px;
-  left: 150px;
+  top: 120px;
+  left: 140 px;
 
   object-fit: cover;
 }
