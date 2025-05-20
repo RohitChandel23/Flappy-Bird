@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ProjectImages } from "../../assets/ProjectImages";
 import { Pipe } from "./Pipe/Pipe";
-
 import "./CanvasGame.css";
 
 interface ClassComponentProps {
@@ -96,7 +95,8 @@ function CanvasGame() {
   const [isGameover, setIsGameover] = useState<boolean>(false);
   const hasCrashedRef = useRef<boolean>(false);
 
-  function restartGame() {
+  //user name input will be displayed only if not defined
+  function restartGame() {  
     setScore(0);
     setIsGameover(false);
     pipesRef.current = [];
@@ -115,6 +115,13 @@ function CanvasGame() {
     setIsGameStarted(false);
     hasCrashedRef.current = false;
   }
+
+  function handleKeyDown(e:any){
+   if (e.code === "Space" || e.key === " ") {
+    e.preventDefault(); 
+    handleClick();
+  }
+}
 
   useEffect(() => {
     if (!isGameStarted) return;
@@ -140,12 +147,7 @@ function CanvasGame() {
         piece.update();
       }
 
-      // if (frameCounter % 310 == 0) {
-      //   setScore((prev) => prev + 1);
-      //   // console.log(score);
-      // }
-
-      if (frameCounter % 250 == 0) {
+      if (frameCounter % 185 == 0) {
         const gap = 150;
         const minHeight = 150;
         const maxHeight = 400;
@@ -201,9 +203,9 @@ function CanvasGame() {
         if (piece && piece.crashWithPipe(pipe)) 
           crashed = true;
       });
-      if (crashed || hasCrashedRef.current) {  
+      if (crashed || hasCrashedRef.current) {     // collission detection , pipe -> bird should fall 
         setIsGameover((prev) => !prev);
-        clearInterval(intervalRef.current);
+        clearInterval(intervalRef.current);   
       }
     }, 9);
 
@@ -260,7 +262,7 @@ function CanvasGame() {
             </div>
             <button onClick={() => setIsGameStarted(true)}>start</button>
           </div>
-          <div className="canvas-background" onClick={handleClick}>
+          <div className="canvas-background" onClick={handleClick} onKeyDown={ (e)=> handleKeyDown(e)}>
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
         </div>
@@ -275,5 +277,5 @@ export default CanvasGame;
 //game over -> game over modal  ***
 //game score -> score calculation ***
 
+//scoreboard -> username and score
 //on crash bird should fall to the ground
-//scoreboard -> username and score  
