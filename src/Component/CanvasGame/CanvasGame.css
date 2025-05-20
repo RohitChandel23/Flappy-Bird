@@ -8,12 +8,25 @@
 }
 
 canvas {
+  position: relative;
   background-image: url("../../assets/icons/bg.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 
   background-color: lightpink;
+}
+
+.game-score{
+  position: absolute;
+  left:46rem;
+  top:2%;
+
+  width:auto;
+  height: auto;
+  color:white;
+  font-size: 20px;
+  border-radius: 5px;
 }
 
 .canvas-background{
@@ -27,8 +40,6 @@ canvas {
   width: 100%;
   height: 100%;
 }
-
-
 
 .start-canvas {
   width: 480px;
@@ -66,11 +77,9 @@ canvas {
 .bird-container{
   width:60px;
   height:40px;
-  
   position: absolute;
-  top: 120px;
-  left: 140 px;
-
+  top: 130px;
+  left: 127px;
   object-fit: cover;
 }
 
@@ -78,6 +87,34 @@ canvas {
   width:100%;
   height:100%;
 }
+
+.game-over-modal{
+  position: absolute;
+  height: 200px;
+  width:200px;
+  text-align: center;
+
+  border-radius: 4px;
+  box-shadow: 20px 20px 40px grey;
+  background-color: rgb(255, 255, 221);
+  font-family: Press Start 2P, monospace;
+
+} 
+
+.game-over-modal button{
+  font-size: 23px;
+  padding: 4% 7% 4% 7%;
+  background-color: lightcoral;
+  color:white;
+  border: none;
+  border-radius:2px;
+  cursor: pointer;
+}
+
+.restart-button:hover{
+    background-color: rgb(222, 123, 123);
+}
+
 
 
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ProjectImages } from "../../assets/ProjectImages";
 import { Pipe } from "./Pipe/Pipe";
+// import "@fontsource/press-start-2p";
 import "./CanvasGame.css";
 
 interface ClassComponentProps {
@@ -91,7 +92,27 @@ function CanvasGame() {
   const pipesRef = useRef<Pipe[]>([]);
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 
-  let score = 0;
+  const [score, setScore] = useState<number>(0);
+  const [isGameover, setIsGameover] = useState<boolean>(false);
+
+  function restartGame() {
+    setScore(0);
+    setIsGameover(false);
+    pipesRef.current = [];
+
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+
+    if (canvas && ctx) {
+      gamePieceRef.current = new Component(
+        { width: 50, height: 40, x: 130, y: 150 },
+        ctx
+      );
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    setIsGameStarted(false);
+  }
 
   useEffect(() => {
     if (!isGameStarted) return;
@@ -118,8 +139,8 @@ function CanvasGame() {
         piece.update();
       }
 
-      if (frameCounter % 320 == 0) {
-        score++;
+      if (frameCounter % 310 == 0) {
+        setScore((prev) => prev + 1);
         console.log(score);
       }
 
@@ -171,7 +192,7 @@ function CanvasGame() {
         if (piece && piece.crashWithPipe(pipe)) crashed = true;
       });
       if (crashed) {
-        alert("game over");
+        setIsGameover((prev) => !prev);
         clearInterval(intervalRef.current);
       }
     }, 9);
@@ -202,6 +223,19 @@ function CanvasGame() {
           <div className="canvas-background" onClick={handleClick}>
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
+
+          <div className="game-score">
+            <h4>Score: {score}</h4>
+          </div>
+          {isGameover && (
+            <div className="game-over-modal">
+              <h2>Game Over</h2>
+              <h4>Your Score: {score}</h4>
+              <button className="restart-button" onClick={restartGame}>
+                Restart
+              </button>
+            </div>
+          )}
         </div>
       )}
 
@@ -224,6 +258,7 @@ function CanvasGame() {
 }
 export default CanvasGame;
 
-//game start *
-//game over
-//game score -> game over modal,
+
+//game start ****
+//game score -> score calculation , display
+//game over -> game over modal
