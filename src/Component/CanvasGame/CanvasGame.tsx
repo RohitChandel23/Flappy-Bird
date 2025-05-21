@@ -117,12 +117,24 @@ function CanvasGame() {
     hasCrashedRef.current = false;
   }
 
-  function handleKeyDown(e: any) {
+  function handleKeyDown(e: KeyboardEvent) {
     if (e.code === "Space" || e.key === " ") {
-      e.preventDefault();
-      handleClick();
+      e.preventDefault(); 
+      if (isGameStarted && !isGameover && gamePieceRef.current) {
+        gamePieceRef.current.jump();
+      } else if (!isGameStarted) {
+        setIsGameStarted(true);
+      }
     }
   }
+
+     useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isGameStarted, isGameover]); 
 
   useEffect(() => {
     if (!isGameStarted) return;
@@ -299,3 +311,8 @@ function CanvasGame() {
 }
 
 export default CanvasGame;
+
+
+// bird fall
+// leaderboard
+// bird wing animation
