@@ -116,12 +116,24 @@ function CanvasGame() {
     hasCrashedRef.current = false;
   }
 
-  function handleKeyDown(e:any){
-   if (e.code === "Space" || e.key === " ") {
-    e.preventDefault(); 
-    handleClick();
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.code === "Space" || e.key === " ") {
+      e.preventDefault(); 
+      if (isGameStarted && !isGameover && gamePieceRef.current) {
+        gamePieceRef.current.jump();
+      } else if (!isGameStarted) {
+        setIsGameStarted(true);
+      }
+    }
   }
-}
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isGameStarted, isGameover]); 
 
   useEffect(() => {
     if (!isGameStarted) return;
@@ -187,7 +199,6 @@ function CanvasGame() {
         );
       }
 
-       console.log(hasCrashedRef.current)
       let crashed = false;
       pipesRef.current.forEach((pipe) => {
         pipe.move();
@@ -215,9 +226,13 @@ function CanvasGame() {
     };
   }, [isGameStarted]);
 
+  console.log("Console log: Hit spacebar to jump!");
+
   function handleClick() {
-    if (gamePieceRef.current) 
+    if (isGameStarted && !isGameover && gamePieceRef.current) {
+      console.log("Jump triggered by click!");
       gamePieceRef.current.jump();
+    }
   }
 
   return (
@@ -262,7 +277,7 @@ function CanvasGame() {
             </div>
             <button onClick={() => setIsGameStarted(true)}>start</button>
           </div>
-          <div className="canvas-background" onClick={handleClick} onKeyDown={ (e)=> handleKeyDown(e)}>
+          <div className="canvas-background" onClick={handleClick}>
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
         </div>
@@ -272,10 +287,3 @@ function CanvasGame() {
 }
 export default CanvasGame;
 
-
-//game start ***
-//game over -> game over modal  ***
-//game score -> score calculation ***
-
-//scoreboard -> username and score
-//on crash bird should fall to the ground
