@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ProjectImages } from "../../assets/ProjectImages";
-import { Pipe } from "./Pipe/Pipe";
+import { Pipe, PIPE_SPEED } from "./Pipe/Pipe";
 import "./CanvasGame.css";
 
 interface ClassComponentProps {
@@ -11,7 +11,7 @@ interface ClassComponentProps {
 }
 
 const CANVAS_WIDTH = 480;
-const CANVAS_HEIGHT = 730;
+const CANVAS_HEIGHT = 800;
 const GROUND_HEIGHT = 95;
 const BIRD_WIDTH = 60;
 const BIRD_HEIGHT = 40;
@@ -19,6 +19,8 @@ const BIRD_INITIAL_X = CANVAS_WIDTH / 3.5;
 const BIRD_INITIAL_Y = CANVAS_HEIGHT / 4.3;
 const JUMP_SPEED = -3;
 const PIPE_WIDTH = 85;
+const PIPE_MIN_HEIGHT = 150;
+const PIPE_GAP = 150;
 
 class Component {
   width: number;
@@ -112,6 +114,7 @@ function CanvasGame() {
     setScore(0);
     setIsGameover(false);
     pipesRef.current = [];
+
     setIsGameStarted(false);
     hasCrashedRef.current = false;
   }
@@ -180,11 +183,16 @@ function CanvasGame() {
         piece.newPos(canvas.height, hasCrashedRef);
         piece.update();
       }
-
-      if (frameCounter % 185 === 0) {
-        const gap = 150;  
-        const minHeight = 100;       
-        const maxPipeBottomY = canvas.height - GROUND_HEIGHT - 60 ;
+      
+      //185 -> -1.5
+      //125 -> -2.5
+      //65 -> -3.5
+      //  const newPipeFrame =  (PIPE_SPEED * 120)/5; -1.5 then 185, -2.5 then 125, -3.5 then 65
+      const newPipeFrame = 60 * PIPE_SPEED + 275;
+      if (frameCounter % newPipeFrame === 0) {
+        const gap = PIPE_GAP;  
+        const minHeight = PIPE_MIN_HEIGHT;       
+        const maxPipeBottomY = canvas.height - GROUND_HEIGHT - 60;
         const topPipeHeight = Math.floor(
           Math.random() * (maxPipeBottomY - gap - minHeight - 95) + minHeight
         );
@@ -242,7 +250,7 @@ function CanvasGame() {
           crashed = true;
       });
 
-      if (crashed || hasCrashedRef.current) {
+      if ((crashed || hasCrashedRef.current) && false) {
         setIsGameover(true);
         clearInterval(intervalRef.current);
       }
@@ -297,18 +305,18 @@ function CanvasGame() {
           </div>
           <div
             className="canvas-background"
-            onClick={handleClick}
-            onKeyDown={(e:any) => handleKeyDown(e)}
-          >
+            onClick={handleClick}>
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
         </div>
       )}
-      {/* <div className="gif-container">
-        <img src={ProjectImages.BIRD_GIF}/>
-      </div> */}
     </>
   );
 }
-
 export default CanvasGame;
+
+
+// bird animation
+// bottom bg image: improvement
+// pipe generation: improvement
+// setInterval method : look for alternatives
