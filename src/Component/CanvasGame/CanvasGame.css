@@ -16,6 +16,7 @@
 
 canvas {
   position: relative;
+  
   background-image: url("../../assets/icons/bg.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -27,7 +28,6 @@ canvas {
   position: absolute;
   left:46rem;
   top:2%;
-
   width:auto;
   height: auto;
   color:white;
@@ -86,8 +86,8 @@ canvas {
   width:60px;
   height:40px;
   position: absolute;
-  top: 200px;
-  left: 127px;
+  top: 160px;
+  left: 140px;
   object-fit: cover;
 }
 
@@ -127,6 +127,11 @@ canvas {
 .restart-button:hover{
     background-color: rgb(192, 62, 62);
 }
+
+.gif-container{
+  width: 200px;
+  height:200px;
+} 
 
 
 

@@ -13,6 +13,12 @@ interface ClassComponentProps {
 const CANVAS_WIDTH = 480;
 const CANVAS_HEIGHT = 730;
 const GROUND_HEIGHT = 95;
+const BIRD_WIDTH = 60;
+const BIRD_HEIGHT = 40;
+const BIRD_INITIAL_X = CANVAS_WIDTH / 3.5;
+const BIRD_INITIAL_Y = CANVAS_HEIGHT / 4.3;
+const JUMP_SPEED = -3;
+const PIPE_WIDTH = 85;
 
 class Component {
   width: number;
@@ -51,16 +57,21 @@ class Component {
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
     this.hitBottom(canvasHeight, hasCrashedRef);
+     this.hitTop(hasCrashedRef)
   }
 
   hitBottom(canvasHeight: number, hasCrashedRef: any) {
     const bottom = canvasHeight - GROUND_HEIGHT - this.height;
     if (this.y > bottom) {
-      this.y = bottom;
-      this.gravitySpeed = 0;
       hasCrashedRef.current = true;
     }
   }
+
+ hitTop(hasCrashedRef: any) {
+  if (this.y < 0) {
+    hasCrashedRef.current = true;
+  }
+}
 
   crashWithPipe(pipe: Pipe) {
     const birdLeft = this.x;
@@ -79,7 +90,7 @@ class Component {
   }
 
   jump() {
-    this.gravitySpeed = -2.9;
+    this.gravitySpeed = JUMP_SPEED;
   }
 }
 
@@ -101,24 +112,12 @@ function CanvasGame() {
     setScore(0);
     setIsGameover(false);
     pipesRef.current = [];
-
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-
-    if (canvas && ctx) {
-      gamePieceRef.current = new Component(
-        { width: 50, height: 40, x: 130, y: 150 },
-        ctx
-      );
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
     setIsGameStarted(false);
     hasCrashedRef.current = false;
   }
 
   function handleKeyDown(e: KeyboardEvent) {
-    if (e.code === "Space" || e.key === " ") {
+    if (e.code === "Space") {
       e.preventDefault(); 
       if (isGameStarted && !isGameover && gamePieceRef.current) {
         gamePieceRef.current.jump();
@@ -146,7 +145,7 @@ function CanvasGame() {
     if (!ctx) return;
 
     gamePieceRef.current = new Component(
-      { width: 50, height: 40, x: 130, y: 150 },
+      { width: BIRD_WIDTH, height: BIRD_HEIGHT, x: BIRD_INITIAL_X, y: BIRD_INITIAL_Y },
       ctx
     );
 
@@ -182,9 +181,8 @@ function CanvasGame() {
         piece.update();
       }
 
-      // Create pipes
       if (frameCounter % 185 === 0) {
-        const gap = 150;
+        const gap = 150;  
         const minHeight = 100;       
         const maxPipeBottomY = canvas.height - GROUND_HEIGHT - 60 ;
         const topPipeHeight = Math.floor(
@@ -192,13 +190,12 @@ function CanvasGame() {
         );
 
         const bottomPipeY = topPipeHeight + gap;
-        const bottomPipeHeight =
-          canvas.height - GROUND_HEIGHT - bottomPipeY;
+        const bottomPipeHeight = canvas.height - GROUND_HEIGHT - bottomPipeY;
 
         pipesRef.current.push(
           new Pipe(
             {
-              width: 85,
+              width: PIPE_WIDTH,
               height: topPipeHeight,
               x: canvas.width,
               y: 0,
@@ -213,7 +210,7 @@ function CanvasGame() {
         pipesRef.current.push(
           new Pipe(
             {
-              width: 85,
+              width: PIPE_WIDTH,
               height: bottomPipeHeight,
               x: canvas.width,
               y: bottomPipeY,
@@ -241,7 +238,8 @@ function CanvasGame() {
           pipe.scored = true;
         }
 
-        if (piece && piece.crashWithPipe(pipe)) crashed = true;
+        if (piece && piece.crashWithPipe(pipe)) 
+          crashed = true;
       });
 
       if (crashed || hasCrashedRef.current) {
@@ -300,19 +298,17 @@ function CanvasGame() {
           <div
             className="canvas-background"
             onClick={handleClick}
-            onKeyDown={(e) => handleKeyDown(e)}
+            onKeyDown={(e:any) => handleKeyDown(e)}
           >
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
         </div>
       )}
+      {/* <div className="gif-container">
+        <img src={ProjectImages.BIRD_GIF}/>
+      </div> */}
     </>
   );
 }
 
 export default CanvasGame;
-
-
-// bird fall
-// leaderboard
-// bird wing animation

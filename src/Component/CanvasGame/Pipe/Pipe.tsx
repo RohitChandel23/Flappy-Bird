@@ -1,4 +1,6 @@
-    export interface PipeProps {
+const PIPE_SPEED = -1.5;
+
+export interface PipeProps {
         width: number;
         height: number;
         x: number;
@@ -16,7 +18,6 @@
         topImage: HTMLImageElement;
         bottomImage: HTMLImageElement;
         ctx: CanvasRenderingContext2D;
-        gap: number;
         isTopPipe: boolean;
         scored: boolean;
       
@@ -25,7 +26,6 @@
           this.height = props.height;
           this.x = props.x;
           this.y = props.y;
-          this.gap = 150;
           this.ctx = ctx;
           this.isTopPipe = props.isTopPipe || false; 
       
@@ -45,6 +45,6 @@
         }
       
         move() {
-          this.x += -1.5;
+          this.x +=PIPE_SPEED;
         }
       } 
