@@ -10,6 +10,10 @@ interface ClassComponentProps {
   y: number;
 }
 
+const CANVAS_WIDTH = 480;
+const CANVAS_HEIGHT = 730;
+const GROUND_HEIGHT = 95;
+
 class Component {
   width: number;
   height: number;
@@ -42,15 +46,15 @@ class Component {
     this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
-  newPos(canvasHeight: number, hasCrashedRef:any) {
+  newPos(canvasHeight: number, hasCrashedRef: any) {
     this.gravitySpeed += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
     this.hitBottom(canvasHeight, hasCrashedRef);
   }
 
-  hitBottom(canvasHeight: number,hasCrashedRef:any) {
-    const bottom = canvasHeight - this.height;
+  hitBottom(canvasHeight: number, hasCrashedRef: any) {
+    const bottom = canvasHeight - GROUND_HEIGHT - this.height;
     if (this.y > bottom) {
       this.y = bottom;
       this.gravitySpeed = 0;
@@ -69,15 +73,9 @@ class Component {
     const pipeTop = pipe.y;
     const pipeBottom = pipe.y + pipe.height;
 
-    if (birdRight < pipeLeft || birdLeft > pipeRight) {
-      return false;
-    }
+    if (birdRight < pipeLeft || birdLeft > pipeRight) return false;
 
-    if (pipe.isTopPipe) {
-      return birdBottom > pipeTop && birdTop < pipeBottom;
-    } else {
-      return birdTop < pipeBottom && birdBottom > pipeTop;
-    }
+    return !(birdBottom < pipeTop || birdTop > pipeBottom);
   }
 
   jump() {
@@ -90,13 +88,16 @@ function CanvasGame() {
   const gamePieceRef = useRef<Component | null>(null);
   const intervalRef = useRef<any | null>(null);
   const pipesRef = useRef<Pipe[]>([]);
-  const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
-  const [score, setScore] = useState<number>(0);
-  const [isGameover, setIsGameover] = useState<boolean>(false);
-  const hasCrashedRef = useRef<boolean>(false);
+  const bottomBg = new Image();
+  bottomBg.src = ProjectImages.BOTTOM_BG;
+  const bottomBgXRef = useRef(0);
 
-  //user name input will be displayed only if not defined
-  function restartGame() {  
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const [score, setScore] = useState(0);
+  const [isGameover, setIsGameover] = useState(false);
+  const hasCrashedRef = useRef(false);
+
+  function restartGame() {
     setScore(0);
     setIsGameover(false);
     pipesRef.current = [];
@@ -116,24 +117,12 @@ function CanvasGame() {
     hasCrashedRef.current = false;
   }
 
-  function handleKeyDown(e: KeyboardEvent) {
+  function handleKeyDown(e: any) {
     if (e.code === "Space" || e.key === " ") {
-      e.preventDefault(); 
-      if (isGameStarted && !isGameover && gamePieceRef.current) {
-        gamePieceRef.current.jump();
-      } else if (!isGameStarted) {
-        setIsGameStarted(true);
-      }
+      e.preventDefault();
+      handleClick();
     }
   }
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isGameStarted, isGameover]); 
 
   useEffect(() => {
     if (!isGameStarted) return;
@@ -153,20 +142,46 @@ function CanvasGame() {
     intervalRef.current = setInterval(() => {
       frameCounter++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+      bottomBgXRef.current -= 1.5;
+      if (bottomBgXRef.current <= -canvas.width) {
+        bottomBgXRef.current = 0;
+      }
+
+      ctx.drawImage(
+        bottomBg,
+        bottomBgXRef.current,
+        canvas.height - GROUND_HEIGHT,
+        canvas.width,
+        GROUND_HEIGHT
+      );
+      ctx.drawImage(
+        bottomBg,
+        bottomBgXRef.current + canvas.width,
+        canvas.height - GROUND_HEIGHT,
+        canvas.width,
+        GROUND_HEIGHT
+      );
+
       const piece = gamePieceRef.current;
       if (piece) {
         piece.newPos(canvas.height, hasCrashedRef);
         piece.update();
       }
 
-      if (frameCounter % 185 == 0) {
+      // Create pipes
+      if (frameCounter % 185 === 0) {
         const gap = 150;
-        const minHeight = 150;
-        const maxHeight = 400;
+        const minHeight = 100;       
+        const maxPipeBottomY = canvas.height - GROUND_HEIGHT - 60 ;
         const topPipeHeight = Math.floor(
-          Math.random() * (maxHeight - minHeight) + minHeight
+          Math.random() * (maxPipeBottomY - gap - minHeight - 95) + minHeight
         );
+
         const bottomPipeY = topPipeHeight + gap;
+        const bottomPipeHeight =
+          canvas.height - GROUND_HEIGHT - bottomPipeY;
 
         pipesRef.current.push(
           new Pipe(
@@ -187,7 +202,7 @@ function CanvasGame() {
           new Pipe(
             {
               width: 85,
-              height: canvas.height - bottomPipeY,
+              height: bottomPipeHeight,
               x: canvas.width,
               y: bottomPipeY,
               isTopPipe: false,
@@ -204,35 +219,32 @@ function CanvasGame() {
         pipe.move();
         pipe.draw();
 
-        if(!pipe.isTopPipe && !pipe.scored && gamePieceRef.current){
-          if(gamePieceRef.current.x > pipe.x + pipe.width){
-            setScore(prev => prev+1);
-            pipe.scored = true;
-          }
+        if (
+          !pipe.isTopPipe &&
+          !pipe.scored &&
+          gamePieceRef.current &&
+          gamePieceRef.current.x > pipe.x + pipe.width
+        ) {
+          setScore((prev) => prev + 1);
+          pipe.scored = true;
         }
 
-        if (piece && piece.crashWithPipe(pipe)) 
-          crashed = true;
+        if (piece && piece.crashWithPipe(pipe)) crashed = true;
       });
-      if (crashed || hasCrashedRef.current) {     // collission detection , pipe -> bird should fall 
-        setIsGameover((prev) => !prev);
-        clearInterval(intervalRef.current);   
+
+      if (crashed || hasCrashedRef.current) {
+        setIsGameover(true);
+        clearInterval(intervalRef.current);
       }
     }, 9);
 
     return () => {
-      if (intervalRef.current) 
-        clearInterval(intervalRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isGameStarted]);
 
-  console.log("Console log: Hit spacebar to jump!");
-
   function handleClick() {
-    if (isGameStarted && !isGameover && gamePieceRef.current) {
-      console.log("Jump triggered by click!");
-      gamePieceRef.current.jump();
-    }
+    if (gamePieceRef.current) gamePieceRef.current.jump();
   }
 
   return (
@@ -241,18 +253,14 @@ function CanvasGame() {
         <div className="canvas-wrapper">
           <canvas
             ref={canvasRef}
-            width={480}
-            height={730}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
             style={{
               border: "1px solid #d3d3d3",
               backgroundColor: "#f1f1f1",
             }}
             onClick={handleClick}
           />
-          <div className="canvas-background" onClick={handleClick}>
-            <img src={ProjectImages.BOTTOM_BG} />
-          </div>
-
           <div className="game-score">
             <h4>{score}</h4>
           </div>
@@ -269,15 +277,19 @@ function CanvasGame() {
       )}
 
       {!isGameStarted && (
-        <div className="canvas-wrapper">
+        <div className="canvas-wrapper-start">
           <div className="start-canvas">
             <img src={ProjectImages.BACKGROUND_IMAGE} />
             <div className="bird-container">
               <img src={ProjectImages.BIRD} />
             </div>
-            <button onClick={() => setIsGameStarted(true)}>start</button>
+            <button onClick={() => setIsGameStarted(true)}>Start</button>
           </div>
-          <div className="canvas-background" onClick={handleClick}>
+          <div
+            className="canvas-background"
+            onClick={handleClick}
+            onKeyDown={(e) => handleKeyDown(e)}
+          >
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
         </div>
@@ -285,5 +297,5 @@ function CanvasGame() {
     </>
   );
 }
-export default CanvasGame;
 
+export default CanvasGame;

@@ -6,6 +6,14 @@
   margin-top: 1.8%;
 }
 
+.canvas-wrapper-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.8%;
+}
+
 canvas {
   position: relative;
   background-image: url("../../assets/icons/bg.png");
@@ -42,7 +50,7 @@ canvas {
 
 .start-canvas {
   width: 480px;
-  height: 730px;
+  height: 635px;
   position: relative;
 }
 

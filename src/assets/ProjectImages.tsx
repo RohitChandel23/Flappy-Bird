@@ -1,6 +1,6 @@
 import BACKGROUND_IMAGE from './icons/bg.png';
 import BIRD from './icons/bird.png';
-import BOTTOM_BG from './icons/fg.png';
+import BOTTOM_BG from './icons/base.png';
 import PIPE_BOTTOM from './icons/pipe-bottom.png';
 import PIPE_TOP from './icons/pipe-top.png';
 import BIRD_GIF from './icons/bird-gif.gif'
