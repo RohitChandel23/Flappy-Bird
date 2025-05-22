@@ -50,7 +50,7 @@ canvas {
 
 .start-canvas {
   width: 480px;
-  height: 705px;
+  height: 655px;
   position: relative;
 }
 
@@ -132,6 +132,29 @@ canvas {
   width: 200px;
   height:200px;
 } 
+
+.speed-btn-container{
+  position: absolute;
+  top: 64px; 
+  width: 480px;
+  font-family: "Press Start 2P", system-ui;
+  text-align: center;
+}
+
+.speed-btn-container button{
+  color: white;
+  font-size:22px;
+  margin: 0% 9% 0% 0%;
+  background-color: transparent;
+  border: none; 
+  font-family: "Press Start 2P", system-ui;
+  cursor: pointer;
+}
+
+.speed-btn-container button:hover{
+box-shadow: 3px 3px 3px #888888;
+border-radius: 4px;
+}
 
 
 

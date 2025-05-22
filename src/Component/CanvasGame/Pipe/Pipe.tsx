@@ -1,4 +1,5 @@
-export const PIPE_SPEED = -2;
+// export const PIPE_SPEED = -2;
+import {pipeSpeed} from '../CanvasGame';
 
 export interface PipeProps {
         width: number;
@@ -45,6 +46,6 @@ export interface PipeProps {
         }
       
         move() {
-          this.x +=PIPE_SPEED;
+          this.x +=pipeSpeed;
         }
       } 
