@@ -64,7 +64,13 @@ class Component {
     this.ctx.save();
     this.ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
     this.ctx.rotate(this.angle);
-    this.ctx.drawImage(birdImage,-this.width / 2,-this.height / 2,this.width,this.height);
+    this.ctx.drawImage(
+      birdImage,
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height
+    );
     this.ctx.restore();
   }
 
@@ -108,7 +114,6 @@ class Component {
     const pipeBottom = pipe.y + pipe.height;
 
     if (birdRight < pipeLeft || birdLeft > pipeRight) return false;
-
     return !(birdBottom < pipeTop || birdTop > pipeBottom);
   }
 
@@ -126,6 +131,10 @@ function CanvasGame() {
   bottomBg.src = ProjectImages.BOTTOM_BG;
   const bottomBgXRef = useRef(0);
 
+  const mainBg = new Image();
+  mainBg.src = ProjectImages.BACKGROUND_IMAGE;
+  const mainBgXRef = useRef(0);
+
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [score, setScore] = useState(0);
   const [isGameover, setIsGameover] = useState(false);
@@ -140,9 +149,9 @@ function CanvasGame() {
     hasCrashedRef.current = false;
   }
 
-  function handleSpeed(selectedSpeed:number){
+  function handleSpeed(selectedSpeed: number) {
     pipeSpeed = -selectedSpeed;
-     setIsGameStarted(true);
+    setIsGameStarted(true);
   }
 
   function handleKeyDown(e: KeyboardEvent) {
@@ -186,6 +195,21 @@ function CanvasGame() {
     intervalRef.current = setInterval(() => {
       frameCounter++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      mainBgXRef.current += pipeSpeed + 1.8;
+
+      if (mainBgXRef.current <= -canvas.width) {
+        mainBgXRef.current = 0;
+      }
+
+      ctx.drawImage(mainBg, mainBgXRef.current, 0, canvas.width, canvas.height);
+      ctx.drawImage(
+        mainBg,
+        mainBgXRef.current + canvas.width,
+        0,
+        canvas.width,
+        canvas.height
+      );
 
       bottomBgXRef.current -= -pipeSpeed;
       if (bottomBgXRef.current <= -canvas.width) {
@@ -279,7 +303,7 @@ function CanvasGame() {
         if (piece && piece.crashWithPipe(pipe)) crashed = true;
       });
 
-      if ((crashed || hasCrashedRef.current) ) {
+      if (crashed || hasCrashedRef.current) {
         setIsGameover(true);
         clearInterval(intervalRef.current);
       }
@@ -338,17 +362,31 @@ function CanvasGame() {
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
           <div className="speed-btn-container">
-        <button className = {pipeSpeed ==-1 ? 'selected-speed':''} onClick={()=>handleSpeed(1)}>1X</button>
-        <button className = {pipeSpeed ==-2 ? 'selected-speed':''} onClick={()=>handleSpeed(2)}>2X</button>
-        <button className = {pipeSpeed ==-3 ? 'selected-speed':''} onClick={()=>handleSpeed(3)}>3X</button>
-      </div>
+            <button
+              className={pipeSpeed == -1 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(1)}
+            >
+              1X
+            </button>
+            <button
+              className={pipeSpeed == -2 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(2)}
+            >
+              2X
+            </button>
+            <button
+              className={pipeSpeed == -3 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(3)}
+            >
+              3X
+            </button>
+          </div>
         </div>
-      )}  
+      )}
     </>
   );
 }
 export default CanvasGame;
-
 
 // bird animation
 // bottom bg image: improvement ***
@@ -356,4 +394,3 @@ export default CanvasGame;
 // setInterval method : look for alternatives
 // paralleX effect
 //max 60 , 0
-

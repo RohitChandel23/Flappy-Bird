@@ -14,7 +14,7 @@
   margin-top: 1.8%;
 }
 
-canvas {
+/* canvas {
   position: relative;
   
   background-image: url("../../assets/icons/bg.png");
@@ -22,7 +22,7 @@ canvas {
   background-size: cover;
   background-position: center;
   background-color: lightpink;
-}
+} */
 
 .game-score{
   position: absolute;
