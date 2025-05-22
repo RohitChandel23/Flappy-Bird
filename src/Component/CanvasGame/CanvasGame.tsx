@@ -25,7 +25,6 @@ const PIPE_WIDTH = 85;
 const PIPE_MIN_HEIGHT = 150;
 const PIPE_GAP = 150;
 
-
 class Component {
   width: number;
   height: number;
@@ -139,7 +138,6 @@ function CanvasGame() {
 
     setIsGameStarted(false);
     hasCrashedRef.current = false;
-    pipeSpeed=-2;
   }
 
   function handleSpeed(selectedSpeed:number){
@@ -340,9 +338,9 @@ function CanvasGame() {
             <img src={ProjectImages.BOTTOM_BG} />
           </div>
           <div className="speed-btn-container">
-        <button onClick={()=>handleSpeed(1)}>1X</button>
-        <button onClick={()=>handleSpeed(2)}>2X</button>
-        <button onClick={()=>handleSpeed(3)}>3X</button>
+        <button className = {pipeSpeed ==-1 ? 'selected-speed':''} onClick={()=>handleSpeed(1)}>1X</button>
+        <button className = {pipeSpeed ==-2 ? 'selected-speed':''} onClick={()=>handleSpeed(2)}>2X</button>
+        <button className = {pipeSpeed ==-3 ? 'selected-speed':''} onClick={()=>handleSpeed(3)}>3X</button>
       </div>
         </div>
       )}  
@@ -351,10 +349,11 @@ function CanvasGame() {
 }
 export default CanvasGame;
 
+
 // bird animation
 // bottom bg image: improvement ***
 // pipe generation: improvement ***
 // setInterval method : look for alternatives
-
+// paralleX effect
 //max 60 , 0
 

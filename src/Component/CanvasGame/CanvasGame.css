@@ -156,6 +156,10 @@ box-shadow: 3px 3px 3px #888888;
 border-radius: 4px;
 }
 
+.selected-speed{
+  color: rgb(192, 62, 62)!important;
+}
+
 
 
 
