@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource/press-start-2p": "^5.2.5",
+    "gifler": "^0.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

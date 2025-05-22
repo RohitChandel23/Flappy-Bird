@@ -1,4 +1,4 @@
-export const PIPE_SPEED = -3.5;
+export const PIPE_SPEED = -2;
 
 export interface PipeProps {
         width: number;
