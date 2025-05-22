@@ -205,7 +205,7 @@ function CanvasGame() {
       ctx.drawImage(mainBg, mainBgXRef.current, 0, canvas.width, canvas.height);
       ctx.drawImage(
         mainBg,
-        mainBgXRef.current + canvas.width,
+        mainBgXRef.current + canvas.width - 2,
         0,
         canvas.width,
         canvas.height
