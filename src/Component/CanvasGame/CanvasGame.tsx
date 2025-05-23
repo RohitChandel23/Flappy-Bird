@@ -6,7 +6,6 @@ import useSound from "use-sound";
 import "./CanvasGame.css";
 import { ProjectAudio } from "../../assets/ProjectAudio";
 
-
 export let pipeSpeed = -2;
 
 interface ClassComponentProps {
@@ -82,7 +81,7 @@ class Component {
     this.ctx.restore();
   }
 
-  newPos(canvasHeight: number, hasCrashedRef: any) {
+  newPos(canvasHeight: number, hasCrashedRef: any, pipeCrashRef: any) {
     this.gravitySpeed += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
@@ -94,7 +93,7 @@ class Component {
       this.angle = Math.min(maxDownwardAngle, this.angle + 0.0399999999);
     }
     this.hitBottom(canvasHeight, hasCrashedRef);
-    this.hitTop(hasCrashedRef);
+    this.hitTop(hasCrashedRef, pipeCrashRef);
   }
 
   hitBottom(canvasHeight: number, hasCrashedRef: any) {
@@ -104,9 +103,9 @@ class Component {
     }
   }
 
-  hitTop(hasCrashedRef: any) {
-    if (this.y < 0) {
-      hasCrashedRef.current = true;
+  hitTop(hasCrashedRef: any, pipeCrashRef:any) {
+    if (this.y < 0 + this.width / 2) {
+      pipeCrashRef.current = true;
     }
   }
 
@@ -162,6 +161,7 @@ function CanvasGame() {
   const bottomBg = new Image();
   bottomBg.src = ProjectImages.BOTTOM_BG;
   const bottomBgXRef = useRef(0);
+  const pipeCrashRef = useRef(false);
 
   const mainBg = new Image();
   mainBg.src = ProjectImages.BACKGROUND_IMAGE;
@@ -174,8 +174,12 @@ function CanvasGame() {
   const [highScore, setHighScore] = useState<number | null>(0);
   const [play] = useSound(ProjectAudio.GAME_OVER);
   const [playCoinSound] = useSound(ProjectAudio.COIN_CRASH);
+  let tempSpeed = pipeSpeed;
+  
+
 
   function restartGame() {
+    pipeCrashRef.current = false;
     setScore(0);
     setIsGameover(false);
     pipesRef.current = [];
@@ -192,13 +196,15 @@ function CanvasGame() {
   function handleKeyDown(e: KeyboardEvent) {
     if (e.code === "Space") {
       e.preventDefault();
-      if (isGameStarted && !isGameover && gamePieceRef.current) {
+      if (isGameStarted && !isGameover && gamePieceRef.current &&  !pipeCrashRef.current) {
         gamePieceRef.current.jump();
+        console.log(pipeCrashRef)
       } else if (!isGameStarted) {
         setIsGameStarted(true);
       }
     }
   }
+
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
@@ -215,6 +221,7 @@ function CanvasGame() {
     };
   }, [isGameStarted, isGameover]);
 
+
   useEffect(() => {
     if (!isGameStarted) return;
 
@@ -224,7 +231,7 @@ function CanvasGame() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    gamePieceRef.current = new Component(
+    gamePieceRef.current = new Component(             //bird generation
       {
         width: BIRD_WIDTH,
         height: BIRD_HEIGHT,
@@ -276,7 +283,7 @@ function CanvasGame() {
 
       const piece = gamePieceRef.current;
       if (piece) {
-        piece.newPos(canvas.height, hasCrashedRef);
+        piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
         piece.update(frameCounter);
       }
 
@@ -351,7 +358,6 @@ function CanvasGame() {
         );
       }
 
-      let crashed = false;
       pipesRef.current.forEach((pipe) => {
         pipe.move();
         pipe.draw();
@@ -366,13 +372,18 @@ function CanvasGame() {
           pipe.scored = true;
         }
 
-        if (piece && piece.crashWithPipe(pipe)) 
-          crashed = true;
+        if (piece && piece.crashWithPipe(pipe) || pipeCrashRef.current){ 
+          pipeCrashRef.current = true
+          pipeSpeed = 0;
+        }
       });
 
-      if (crashed || hasCrashedRef.current) {
+      if (pipeCrashRef.current || hasCrashedRef.current) { 
+        if(hasCrashedRef.current){
+        pipeSpeed = tempSpeed;
         setIsGameover(true);
         clearInterval(intervalRef.current);
+      }
       }
     }, 9);
 
@@ -382,7 +393,7 @@ function CanvasGame() {
   }, [isGameStarted]);
 
   function handleClick() {
-    if (gamePieceRef.current) {
+    if (gamePieceRef.current && !pipeCrashRef.current) {
       gamePieceRef.current.jump();
     }
   }
