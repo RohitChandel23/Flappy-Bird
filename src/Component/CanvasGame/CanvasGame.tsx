@@ -30,6 +30,9 @@ const PIPE_MIN_HEIGHT = 150;
 const PIPE_GAP = 150;
 const DOWN_ANGLE = 75;
 const UP_ANGLE = -30;
+const COIN_WIDTH = 55;
+const COIN_HEIGHT = 55;
+const COIN_GAP = 500;
 
 class Component {
   width: number;
@@ -49,7 +52,6 @@ class Component {
     this.height = props.height;
     this.x = props.x;
     this.y = props.y;
-
     this.speedX = 0;
     this.speedY = 0;
     this.gravity = 0.1;
@@ -113,7 +115,6 @@ class Component {
     const birdRight = this.x + this.width;
     const birdTop = this.y;
     const birdBottom = this.y + this.height;
-
     const pipeLeft = pipe.x;
     const pipeRight = pipe.x + pipe.width;
     const pipeTop = pipe.y;
@@ -143,9 +144,6 @@ class Component {
     ) {
       crash = false;
     }
-
-    // if(crash)
-    //   console.log("coin crash .........")
 
     return crash;
   }
@@ -282,12 +280,12 @@ function CanvasGame() {
         piece.update(frameCounter);
       }
 
-      if (frameCounter % 500 == 0) {
+      if (frameCounter % COIN_GAP == 0) {
         console.log("coin generated");
         coinRef.current = new Coin(
           {
-            width: 55,
-            height: 55,
+            width: COIN_WIDTH,
+            height: COIN_HEIGHT,
             x: canvas.width,
             y: canvas.height / 2,
             coinImageSrc: ProjectImages.COIN,
@@ -302,7 +300,6 @@ function CanvasGame() {
         coinRef.current?.remove();
         playCoinSound();
       }
-
       coinRef?.current?.move();
       coinRef?.current?.draw();
 
@@ -369,7 +366,8 @@ function CanvasGame() {
           pipe.scored = true;
         }
 
-        if (piece && piece.crashWithPipe(pipe)) crashed = true;
+        if (piece && piece.crashWithPipe(pipe)) 
+          crashed = true;
       });
 
       if (crashed || hasCrashedRef.current) {
@@ -458,9 +456,7 @@ function CanvasGame() {
 }
 export default CanvasGame;
 
+
 // bird animation
 // bottom bg image: improvement ***
 // pipe generation: improvement ***
-// setInterval method : look for alternatives
-// paralleX effect
-//max 60 , 0
