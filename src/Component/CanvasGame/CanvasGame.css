@@ -98,7 +98,7 @@
 
 .game-over-modal{
   position: absolute;
-  height: 200px;
+  height: auto;
   width:225px;
   text-align: center;
   padding:2%;

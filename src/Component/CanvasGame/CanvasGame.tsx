@@ -139,6 +139,7 @@ function CanvasGame() {
   const [score, setScore] = useState(0);
   const [isGameover, setIsGameover] = useState(false);
   const hasCrashedRef = useRef(false);
+  const [highScore, setHighScore] = useState<number | null>(0);
 
   function restartGame() {
     setScore(0);
@@ -167,6 +168,13 @@ function CanvasGame() {
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
+    if(isGameover){
+    const item = (localStorage.getItem('highScore')) || 0;
+     console.log("highest score is", item)
+      if(score && Number(item) < score)
+      localStorage.setItem("highScore", JSON.stringify(score));
+    }
+    setHighScore(Number(localStorage.getItem('highScore')))
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
@@ -342,7 +350,8 @@ function CanvasGame() {
           {isGameover && (
             <div className="game-over-modal">
               <h2>Game Over</h2>
-              <h4>Your Score: {score}</h4>
+              <h4>Score: {score}</h4>
+              <h4>Best: {highScore}</h4>
               <button className="restart-button" onClick={restartGame}>
                 Restart
               </button>
@@ -389,6 +398,8 @@ function CanvasGame() {
   );
 }
 export default CanvasGame;
+
+
 
 // bird animation
 // bottom bg image: improvement ***
