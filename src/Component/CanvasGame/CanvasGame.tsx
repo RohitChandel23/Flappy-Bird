@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { ProjectImages } from "../../assets/ProjectImages";
 import { Pipe } from "./Pipe/Pipe";
+import useSound from "use-sound";
 import "./CanvasGame.css";
+import gameOver from '../../assets/audio/game-over.mp3'
 
 export let pipeSpeed = -2;
 
@@ -140,6 +142,7 @@ function CanvasGame() {
   const [isGameover, setIsGameover] = useState(false);
   const hasCrashedRef = useRef(false);
   const [highScore, setHighScore] = useState<number | null>(0);
+  const [play] = useSound(gameOver) //crash sound
 
   function restartGame() {
     setScore(0);
@@ -169,6 +172,7 @@ function CanvasGame() {
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     if(isGameover){
+      play();
     const item = (localStorage.getItem('highScore')) || 0;
      console.log("highest score is", item)
       if(score && Number(item) < score)
@@ -379,7 +383,7 @@ function CanvasGame() {
             >
               1X
             </button>
-            <button
+            <button 
               className={pipeSpeed == -2 ? "selected-speed" : ""}
               onClick={() => handleSpeed(2)}
             >
@@ -391,6 +395,7 @@ function CanvasGame() {
             >
               3X
             </button>
+
           </div>
         </div>
       )}
