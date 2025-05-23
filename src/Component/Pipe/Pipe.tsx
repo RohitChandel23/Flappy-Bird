@@ -1,5 +1,5 @@
 // export const PIPE_SPEED = -2;
-import {pipeSpeed} from '../CanvasGame';
+import {pipeSpeed} from '../CanvasGame/CanvasGame';
 
 export interface PipeProps {
         width: number;

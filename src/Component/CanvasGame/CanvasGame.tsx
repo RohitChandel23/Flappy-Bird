@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { ProjectImages } from "../../assets/ProjectImages";
-import { Pipe } from "./Pipe/Pipe";
+import { Pipe } from "./../Pipe/Pipe";
+import { Coin } from "../Coin/Coin";
 import useSound from "use-sound";
 import "./CanvasGame.css";
-import gameOver from '../../assets/audio/game-over.mp3'
+import { ProjectAudio } from "../../assets/ProjectAudio";
+
 
 export let pipeSpeed = -2;
 
@@ -26,6 +28,8 @@ const JUMP_SPEED = -3;
 const PIPE_WIDTH = 85;
 const PIPE_MIN_HEIGHT = 150;
 const PIPE_GAP = 150;
+const DOWN_ANGLE = 75;
+const UP_ANGLE = -30;
 
 class Component {
   width: number;
@@ -80,8 +84,8 @@ class Component {
     this.gravitySpeed += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
-    const maxDownwardAngle = 75 * (Math.PI / 180);
-    const maxUpwardAngle = -30 * (Math.PI / 180);
+    const maxDownwardAngle = DOWN_ANGLE * (Math.PI / 180);
+    const maxUpwardAngle = UP_ANGLE * (Math.PI / 180);
     if (this.gravitySpeed < 0) {
       this.angle = maxUpwardAngle;
     } else {
@@ -119,6 +123,33 @@ class Component {
     return !(birdBottom < pipeTop || birdTop > pipeBottom);
   }
 
+  coinCrash(coin: any) {
+    const birdLeft = this.x;
+    const birdRight = this.x + this.width;
+    const birdTop = this.y;
+    const birdBottom = this.y + this.height;
+
+    const coinLeft = coin?.x;
+    const coinRight = coin?.x + coin?.width;
+    const coinTop = coin?.y;
+    const coinBottom = coin?.y + coin?.height;
+
+    let crash = true;
+    if (
+      birdBottom < coinTop ||
+      birdTop > coinBottom ||
+      birdRight < coinLeft ||
+      birdLeft > coinRight
+    ) {
+      crash = false;
+    }
+
+    // if(crash)
+    //   console.log("coin crash .........")
+
+    return crash;
+  }
+
   jump() {
     this.gravitySpeed = JUMP_SPEED;
   }
@@ -129,6 +160,7 @@ function CanvasGame() {
   const gamePieceRef = useRef<Component | null>(null);
   const intervalRef = useRef<any | null>(null);
   const pipesRef = useRef<Pipe[]>([]);
+  const coinRef = useRef<Coin | null>(null);
   const bottomBg = new Image();
   bottomBg.src = ProjectImages.BOTTOM_BG;
   const bottomBgXRef = useRef(0);
@@ -142,7 +174,8 @@ function CanvasGame() {
   const [isGameover, setIsGameover] = useState(false);
   const hasCrashedRef = useRef(false);
   const [highScore, setHighScore] = useState<number | null>(0);
-  const [play] = useSound(gameOver) //crash sound
+  const [play] = useSound(ProjectAudio.GAME_OVER);
+  const [playCoinSound] = useSound(ProjectAudio.COIN_CRASH);
 
   function restartGame() {
     setScore(0);
@@ -171,14 +204,14 @@ function CanvasGame() {
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
-    if(isGameover){
+    if (isGameover) {
       play();
-    const item = (localStorage.getItem('highScore')) || 0;
-     console.log("highest score is", item)
-      if(score && Number(item) < score)
-      localStorage.setItem("highScore", JSON.stringify(score));
+      const item = localStorage.getItem("highScore") || 0;
+      console.log("highest score is", item);
+      if (score && Number(item) < score)
+        localStorage.setItem("highScore", JSON.stringify(score));
     }
-    setHighScore(Number(localStorage.getItem('highScore')))
+    setHighScore(Number(localStorage.getItem("highScore")));
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
@@ -209,8 +242,6 @@ function CanvasGame() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       mainBgXRef.current += -2 + 1.8;
-        // mainBgXRef.current -= -pipeSpeed - 1.8;
-
 
       if (mainBgXRef.current <= -canvas.width) {
         mainBgXRef.current = 0;
@@ -219,7 +250,7 @@ function CanvasGame() {
       ctx.drawImage(mainBg, mainBgXRef.current, 0, canvas.width, canvas.height);
       ctx.drawImage(
         mainBg,
-        mainBgXRef.current + canvas.width -2 ,
+        mainBgXRef.current + canvas.width - 2,
         0,
         canvas.width,
         canvas.height
@@ -250,6 +281,30 @@ function CanvasGame() {
         piece.newPos(canvas.height, hasCrashedRef);
         piece.update(frameCounter);
       }
+
+      if (frameCounter % 500 == 0) {
+        console.log("coin generated");
+        coinRef.current = new Coin(
+          {
+            width: 55,
+            height: 55,
+            x: canvas.width,
+            y: canvas.height / 2,
+            coinImageSrc: ProjectImages.COIN,
+            crashed: false,
+          },
+          ctx
+        );
+      }
+      let check = piece?.coinCrash(coinRef?.current);
+      if (coinRef.current && piece && check && !coinRef.current?.crashed) {
+        setScore((prev) => prev + 5);
+        coinRef.current?.remove();
+        playCoinSound();
+      }
+
+      coinRef?.current?.move();
+      coinRef?.current?.draw();
 
       //185 -> -1.5
       //125 -> -2.5
@@ -383,7 +438,7 @@ function CanvasGame() {
             >
               1X
             </button>
-            <button 
+            <button
               className={pipeSpeed == -2 ? "selected-speed" : ""}
               onClick={() => handleSpeed(2)}
             >
@@ -395,7 +450,6 @@ function CanvasGame() {
             >
               3X
             </button>
-
           </div>
         </div>
       )}
@@ -403,8 +457,6 @@ function CanvasGame() {
   );
 }
 export default CanvasGame;
-
-
 
 // bird animation
 // bottom bg image: improvement ***
