@@ -300,7 +300,7 @@ function CanvasGame() {
         coinRef.current &&
         piece &&
         piece.coinCrash(coinRef.current) &&
-        !coinRef.current.crashed
+        !coinRef.current.crashed && !pipeCrashRef.current
       ) {
         setScore((prev) => prev + 5);
         coinRef.current.remove();
