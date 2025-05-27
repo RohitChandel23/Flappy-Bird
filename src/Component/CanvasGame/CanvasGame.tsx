@@ -32,7 +32,7 @@ const UP_ANGLE = -30;
 const COIN_WIDTH = 55;
 const COIN_HEIGHT = 55;
 const COIN_GAP = 500;
-let backgroundSpeed = -2 + 1.8;
+let backgroundSpeed = -0.2;
 
 class Component {
   width: number;
@@ -107,7 +107,7 @@ class Component {
   }
 
   hitTop(hasCrashedRef: any, pipeCrashRef: any) {
-    if (this.y < 0 + this.width / 2) {
+    if (this.y < 0 + this.width / 2.6) {
       pipeCrashRef.current = true;
       console.log(hasCrashedRef);
     }
@@ -132,7 +132,6 @@ class Component {
     const birdRight = this.x + this.width;
     const birdTop = this.y;
     const birdBottom = this.y + this.height;
-
     const coinLeft = coin?.x;
     const coinRight = coin?.x + coin?.width;
     const coinTop = coin?.y;
@@ -181,6 +180,7 @@ function CanvasGame() {
     setScore(0);
     setIsGameover(false);
     pipesRef.current = [];
+    coinRef.current = null;
     setIsGameStarted(false);
     hasCrashedRef.current = false;
   }
@@ -196,20 +196,18 @@ function CanvasGame() {
       if (
         isGameStarted &&
         gamePieceRef.current &&
-        !pipeCrashRef.current && !isGameover
+        !pipeCrashRef.current &&
+        !isGameover
       ) {
         gamePieceRef.current.jump();
-        console.log("jump")
-      } 
-         else if(isGameover){
-          restartGame();
-          console.log("restart game")
-      }
-      else if (!isGameStarted) {
+        console.log("jump");
+      } else if (isGameover) {
+        restartGame();
+        console.log("restart game");
+      } else if (!isGameStarted) {
         setIsGameStarted(true);
-        console.log("starts the game")
+        console.log("starts the game");
       }
-    
     }
   }
 
@@ -291,21 +289,26 @@ function CanvasGame() {
             y: canvas.height / 2,
             coinImageSrc: ProjectImages.COIN,
             crashed: false,
+            coinPipeCrash: false,
           },
           ctx
         );
       }
       const piece = gamePieceRef.current;
+
       if (
         coinRef.current &&
         piece &&
         piece.coinCrash(coinRef.current) &&
-        !coinRef.current.crashed && !pipeCrashRef.current
+        !coinRef.current.crashed &&
+        !pipeCrashRef.current
       ) {
         setScore((prev) => prev + 5);
         coinRef.current.remove();
         playCoinSound();
       }
+
+      //coin
       coinRef.current?.move();
       coinRef.current?.draw();
 
@@ -350,6 +353,7 @@ function CanvasGame() {
         );
       }
 
+      // pipes
       pipesRef.current.forEach((pipe) => {
         pipe.move();
         pipe.draw();
@@ -366,6 +370,31 @@ function CanvasGame() {
           pipeCrashRef.current = true;
           pipeSpeed = 0;
           backgroundSpeed = 0;
+        }
+
+        if (coinRef.current) {
+          const coin = coinRef.current;
+          const coinLeft = coin.x;
+          const coinRight = coin.x + coin.width;
+          const coinTop = coin.y;
+          const coinBottom = coin.y + coin.height;
+
+          const pipeLeft = pipe.x;
+          const pipeRight = pipe.x + pipe.width;
+          const pipeTop = pipe.y;
+          const pipeBottom = pipe.y + pipe.height;
+
+          const isOverlapping = !(
+            pipeBottom < coinTop ||
+            pipeTop > coinBottom ||
+            pipeRight < coinLeft ||
+            pipeLeft > coinRight
+          );
+
+          if (isOverlapping) {
+            coin.coinPipeCrash = true;
+            console.log("Coin is crashing with pipe");
+          }
         }
       });
 
@@ -460,3 +489,5 @@ function CanvasGame() {
   );
 }
 export default CanvasGame;
+
+// coin behind pipe

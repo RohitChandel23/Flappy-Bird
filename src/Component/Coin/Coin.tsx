@@ -7,6 +7,7 @@ export interface CoinProps {
         y: number;
         coinImageSrc: string;
         crashed: boolean;
+        coinPipeCrash: boolean;
       }
       
       export class Coin {
@@ -17,6 +18,7 @@ export interface CoinProps {
         coinImage: HTMLImageElement;
         ctx: CanvasRenderingContext2D;
         crashed: boolean;
+        coinPipeCrash: boolean;
       
         constructor(props: CoinProps, ctx: CanvasRenderingContext2D) {
           this.width = props.width;
@@ -28,11 +30,11 @@ export interface CoinProps {
           this.coinImage = new Image();
           this.coinImage.src = props.coinImageSrc;
           this.crashed = false;
-          
+          this.coinPipeCrash = false;
         }
       
         draw() {
-            if(!this.crashed)
+            if(!this.crashed && !this.coinPipeCrash)
             this.ctx.drawImage(this.coinImage, this.x, this.y, this.width, this.height);
         }
       
