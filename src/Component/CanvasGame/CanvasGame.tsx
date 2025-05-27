@@ -109,6 +109,7 @@ class Component {
   hitTop(hasCrashedRef: any, pipeCrashRef: any) {
     if (this.y < 0 + this.width / 2) {
       pipeCrashRef.current = true;
+      console.log(hasCrashedRef);
     }
   }
 
@@ -194,14 +195,21 @@ function CanvasGame() {
       e.preventDefault();
       if (
         isGameStarted &&
-        !isGameover &&
         gamePieceRef.current &&
-        !pipeCrashRef.current
+        !pipeCrashRef.current && !isGameover
       ) {
         gamePieceRef.current.jump();
-      } else if (!isGameStarted) {
-        setIsGameStarted(true);
+        console.log("jump")
+      } 
+         else if(isGameover){
+          restartGame();
+          console.log("restart game")
       }
+      else if (!isGameStarted) {
+        setIsGameStarted(true);
+        console.log("starts the game")
+      }
+    
     }
   }
 
