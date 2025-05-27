@@ -32,6 +32,7 @@ const UP_ANGLE = -30;
 const COIN_WIDTH = 55;
 const COIN_HEIGHT = 55;
 const COIN_GAP = 500;
+let backgroundSpeed = -2 + 1.8;
 
 class Component {
   width: number;
@@ -64,7 +65,7 @@ class Component {
   }
 
   update(frameCounter: number) {
-    if (frameCounter % 10 == 0) {
+    if (frameCounter % 10 === 0) {
       currentIdx = (currentIdx + 1) % this.birdFrames.length;
     }
     const birdImage = this.birdFrames[currentIdx];
@@ -85,13 +86,15 @@ class Component {
     this.gravitySpeed += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
+
     const maxDownwardAngle = DOWN_ANGLE * (Math.PI / 180);
     const maxUpwardAngle = UP_ANGLE * (Math.PI / 180);
     if (this.gravitySpeed < 0) {
       this.angle = maxUpwardAngle;
     } else {
-      this.angle = Math.min(maxDownwardAngle, this.angle + 0.0399999999);
+      this.angle = Math.min(maxDownwardAngle, this.angle + 0.04);
     }
+
     this.hitBottom(canvasHeight, hasCrashedRef);
     this.hitTop(hasCrashedRef, pipeCrashRef);
   }
@@ -103,7 +106,7 @@ class Component {
     }
   }
 
-  hitTop(hasCrashedRef: any, pipeCrashRef:any) {
+  hitTop(hasCrashedRef: any, pipeCrashRef: any) {
     if (this.y < 0 + this.width / 2) {
       pipeCrashRef.current = true;
     }
@@ -134,17 +137,12 @@ class Component {
     const coinTop = coin?.y;
     const coinBottom = coin?.y + coin?.height;
 
-    let crash = true;
-    if (
+    return !(
       birdBottom < coinTop ||
       birdTop > coinBottom ||
       birdRight < coinLeft ||
       birdLeft > coinRight
-    ) {
-      crash = false;
-    }
-
-    return crash;
+    );
   }
 
   jump() {
@@ -175,15 +173,13 @@ function CanvasGame() {
   const [play] = useSound(ProjectAudio.GAME_OVER);
   const [playCoinSound] = useSound(ProjectAudio.COIN_CRASH);
   let tempSpeed = pipeSpeed;
-  
-
+  let tempBgSpeed = backgroundSpeed;
 
   function restartGame() {
     pipeCrashRef.current = false;
     setScore(0);
     setIsGameover(false);
     pipesRef.current = [];
-
     setIsGameStarted(false);
     hasCrashedRef.current = false;
   }
@@ -196,22 +192,24 @@ function CanvasGame() {
   function handleKeyDown(e: KeyboardEvent) {
     if (e.code === "Space") {
       e.preventDefault();
-      if (isGameStarted && !isGameover && gamePieceRef.current &&  !pipeCrashRef.current) {
+      if (
+        isGameStarted &&
+        !isGameover &&
+        gamePieceRef.current &&
+        !pipeCrashRef.current
+      ) {
         gamePieceRef.current.jump();
-        console.log(pipeCrashRef)
       } else if (!isGameStarted) {
         setIsGameStarted(true);
       }
     }
   }
 
-
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     if (isGameover) {
       play();
-      const item = localStorage.getItem("highScore") || 0;
-      console.log("highest score is", item);
+      const item = localStorage.getItem("highScore") || "0";
       if (score && Number(item) < score)
         localStorage.setItem("highScore", JSON.stringify(score));
     }
@@ -221,17 +219,15 @@ function CanvasGame() {
     };
   }, [isGameStarted, isGameover]);
 
-
   useEffect(() => {
     if (!isGameStarted) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    gamePieceRef.current = new Component(             //bird generation
+    gamePieceRef.current = new Component(
       {
         width: BIRD_WIDTH,
         height: BIRD_HEIGHT,
@@ -246,12 +242,10 @@ function CanvasGame() {
       frameCounter++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      mainBgXRef.current += -2 + 1.8;
-
+      mainBgXRef.current += backgroundSpeed;
       if (mainBgXRef.current <= -canvas.width) {
         mainBgXRef.current = 0;
       }
-
       ctx.drawImage(mainBg, mainBgXRef.current, 0, canvas.width, canvas.height);
       ctx.drawImage(
         mainBg,
@@ -265,7 +259,6 @@ function CanvasGame() {
       if (bottomBgXRef.current <= -canvas.width) {
         bottomBgXRef.current = 0;
       }
-
       ctx.drawImage(
         bottomBg,
         bottomBgXRef.current,
@@ -281,14 +274,7 @@ function CanvasGame() {
         GROUND_HEIGHT
       );
 
-      const piece = gamePieceRef.current;
-      if (piece) {
-        piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
-        piece.update(frameCounter);
-      }
-
-      if (frameCounter % COIN_GAP == 0) {
-        console.log("coin generated");
+      if (frameCounter % COIN_GAP === 0) {
         coinRef.current = new Coin(
           {
             width: COIN_WIDTH,
@@ -301,29 +287,28 @@ function CanvasGame() {
           ctx
         );
       }
-      let check = piece?.coinCrash(coinRef?.current);
-      if (coinRef.current && piece && check && !coinRef.current?.crashed) {
+      const piece = gamePieceRef.current;
+      if (
+        coinRef.current &&
+        piece &&
+        piece.coinCrash(coinRef.current) &&
+        !coinRef.current.crashed
+      ) {
         setScore((prev) => prev + 5);
-        coinRef.current?.remove();
+        coinRef.current.remove();
         playCoinSound();
       }
-      coinRef?.current?.move();
-      coinRef?.current?.draw();
-
-      //185 -> -1.5
-      //125 -> -2.5
-      //65 -> -3.5
-      //const newPipeFrame =  (PIPE_SPEED * 120)/5; -1.5 then 185, -2.5 then 125, -3.5 then 65
+      coinRef.current?.move();
+      coinRef.current?.draw();
 
       const newPipeFrame = 60 * pipeSpeed + 270;
-      if (frameCounter % newPipeFrame == 0) {
+      if (frameCounter % newPipeFrame === 0) {
         const gap = PIPE_GAP;
         const minHeight = PIPE_MIN_HEIGHT;
         const maxPipeBottomY = canvas.height - GROUND_HEIGHT - 60;
         const topPipeHeight = Math.floor(
           Math.random() * (maxPipeBottomY - gap - minHeight - 95) + minHeight
         );
-
         const bottomPipeY = topPipeHeight + gap;
         const bottomPipeHeight = canvas.height - GROUND_HEIGHT - bottomPipeY;
 
@@ -341,7 +326,6 @@ function CanvasGame() {
             ctx
           )
         );
-
         pipesRef.current.push(
           new Pipe(
             {
@@ -361,35 +345,38 @@ function CanvasGame() {
       pipesRef.current.forEach((pipe) => {
         pipe.move();
         pipe.draw();
-
         if (
           !pipe.isTopPipe &&
           !pipe.scored &&
-          gamePieceRef.current &&
-          gamePieceRef.current.x > pipe.x + pipe.width
+          piece &&
+          piece.x > pipe.x + pipe.width
         ) {
           setScore((prev) => prev + 1);
           pipe.scored = true;
         }
-
-        if (piece && piece.crashWithPipe(pipe) || pipeCrashRef.current){ 
-          pipeCrashRef.current = true
+        if (piece && (piece.crashWithPipe(pipe) || pipeCrashRef.current)) {
+          pipeCrashRef.current = true;
           pipeSpeed = 0;
+          backgroundSpeed = 0;
         }
       });
 
-      if (pipeCrashRef.current || hasCrashedRef.current) { 
-        if(hasCrashedRef.current){
-        pipeSpeed = tempSpeed;
-        setIsGameover(true);
-        clearInterval(intervalRef.current);
+      if (piece) {
+        piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
+        piece.update(frameCounter);
       }
+
+      if (pipeCrashRef.current || hasCrashedRef.current) {
+        if (hasCrashedRef.current) {
+          pipeSpeed = tempSpeed;
+          backgroundSpeed = tempBgSpeed;
+          setIsGameover(true);
+          clearInterval(intervalRef.current);
+        }
       }
     }, 9);
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
+    return () => clearInterval(intervalRef.current);
   }, [isGameStarted]);
 
   function handleClick() {
@@ -427,7 +414,6 @@ function CanvasGame() {
           )}
         </div>
       )}
-
       {!isGameStarted && (
         <div className="canvas-wrapper-start">
           <div className="start-canvas">
@@ -442,19 +428,19 @@ function CanvasGame() {
           </div>
           <div className="speed-btn-container">
             <button
-              className={pipeSpeed == -1 ? "selected-speed" : ""}
+              className={pipeSpeed === -1 ? "selected-speed" : ""}
               onClick={() => handleSpeed(1)}
             >
               1X
             </button>
             <button
-              className={pipeSpeed == -2 ? "selected-speed" : ""}
+              className={pipeSpeed === -2 ? "selected-speed" : ""}
               onClick={() => handleSpeed(2)}
             >
               2X
             </button>
             <button
-              className={pipeSpeed == -3 ? "selected-speed" : ""}
+              className={pipeSpeed === -3 ? "selected-speed" : ""}
               onClick={() => handleSpeed(3)}
             >
               3X
@@ -466,8 +452,3 @@ function CanvasGame() {
   );
 }
 export default CanvasGame;
-
-
-// bird animation
-// bottom bg image: improvement ***
-// pipe generation: improvement ***
