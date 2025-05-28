@@ -177,7 +177,6 @@ function CanvasGame() {
   const [playCoinSound] = useSound(ProjectAudio.COIN_CRASH);
   let tempSpeed = pipeSpeed;
   let tempBgSpeed = backgroundSpeed;
-  // let lastDistance = 0;
 
   function restartGame() {
     pipeCrashRef.current = false;
@@ -250,10 +249,12 @@ function CanvasGame() {
     let frameCounter = 0;
 
     // function will start here.................................................
-    let frameId: number;
+    let frameId: number = 0;
     let lastTime: number = 0;
 
     function GameLoop(currentTime: number) {
+      const deltaTime = currentTime / 1000 - lastTime / 1000;
+
       const canvas = canvasRef.current;
 
       if (!canvas) return;
@@ -296,8 +297,12 @@ function CanvasGame() {
         canvas.width,
         GROUND_HEIGHT
       );
+      
+      let coinDistance = 5;
+      let coinCovered = -1 * pipeSpeed * deltaTime 
 
-      if (frameCounter % COIN_GAP === 0) {
+      if(coinCovered > coinDistance){
+        coinCovered = 0
         coinRef.current = new Coin(
           {
             width: COIN_WIDTH,
@@ -332,7 +337,6 @@ function CanvasGame() {
       // time logic
       // pipeSpeed = -2
 
-      const deltaTime = currentTime / 1000 - lastTime / 1000;
       const pipeDistance = 5;
       let currentDistance = -1 * pipeSpeed * deltaTime;
 
@@ -437,8 +441,9 @@ function CanvasGame() {
           cancelAnimationFrame(frameId);
         }
       }
-      console.log("yo its frame id", frameId);
-      if (!hasCrashedRef.current) frameId = requestAnimationFrame(GameLoop);
+      // console.log("yo its frame id", frameId);
+      if (!hasCrashedRef.current) 
+        frameId = requestAnimationFrame(GameLoop);
     }
     frameId = requestAnimationFrame(GameLoop);
 
