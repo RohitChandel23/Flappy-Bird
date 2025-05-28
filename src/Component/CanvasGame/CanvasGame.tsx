@@ -491,3 +491,4 @@ function CanvasGame() {
 export default CanvasGame;
 
 // coin behind pipe
+// animation frame branch
