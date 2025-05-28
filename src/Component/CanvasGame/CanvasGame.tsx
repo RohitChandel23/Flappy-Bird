@@ -6,7 +6,7 @@ import useSound from "use-sound";
 import "./CanvasGame.css";
 import { ProjectAudio } from "../../assets/ProjectAudio";
 
-export let pipeSpeed = -2;
+export let pipeSpeed = -2.5; //-3.5  -4.5 -2.5
 
 interface ClassComponentProps {
   width: number;
@@ -23,7 +23,7 @@ const BIRD_WIDTH = 60;
 const BIRD_HEIGHT = 40;
 const BIRD_INITIAL_X = CANVAS_WIDTH / 3.5;
 const BIRD_INITIAL_Y = CANVAS_HEIGHT / 4.3;
-const JUMP_SPEED = -3;
+const JUMP_SPEED = -6.4; //-4
 const PIPE_WIDTH = 85;
 const PIPE_MIN_HEIGHT = 150;
 const PIPE_GAP = 150;
@@ -54,7 +54,7 @@ class Component {
     this.y = props.y;
     this.speedX = 0;
     this.speedY = 0;
-    this.gravity = 0.1;
+    this.gravity = 0.3;
     this.gravitySpeed = 0;
     this.ctx = ctx;
     this.birdFrames = [new Image(), new Image(), new Image()];
@@ -153,7 +153,10 @@ class Component {
 function CanvasGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gamePieceRef = useRef<Component | null>(null);
-  const intervalRef = useRef<any | null>(null);
+
+  // const intervalRef = useRef<any | null>(null);
+  // const animationRef = useRef<any | null>(null);
+
   const pipesRef = useRef<Pipe[]>([]);
   const coinRef = useRef<Coin | null>(null);
   const bottomBg = new Image();
@@ -174,6 +177,7 @@ function CanvasGame() {
   const [playCoinSound] = useSound(ProjectAudio.COIN_CRASH);
   let tempSpeed = pipeSpeed;
   let tempBgSpeed = backgroundSpeed;
+  // let lastDistance = 0;
 
   function restartGame() {
     pipeCrashRef.current = false;
@@ -244,7 +248,20 @@ function CanvasGame() {
     );
 
     let frameCounter = 0;
-    intervalRef.current = setInterval(() => {
+
+    // function will start here.................................................
+    let frameId: number;
+    let lastTime: number = 0;
+
+    function GameLoop(currentTime: number) {
+      const canvas = canvasRef.current;
+
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      if (!lastTime) lastTime = currentTime;
+
       frameCounter++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -312,8 +329,17 @@ function CanvasGame() {
       coinRef.current?.move();
       coinRef.current?.draw();
 
-      const newPipeFrame = 60 * pipeSpeed + 270;
-      if (frameCounter % newPipeFrame === 0) {
+      // time logic
+      // pipeSpeed = -2
+
+      const deltaTime = currentTime / 1000 - lastTime / 1000;
+      const pipeDistance = 5;
+      let currentDistance = -1 * pipeSpeed * deltaTime;
+
+      if (currentDistance > pipeDistance) {
+        // lastDistance = currentDistance;
+        lastTime = currentTime;
+
         const gap = PIPE_GAP;
         const minHeight = PIPE_MIN_HEIGHT;
         const maxPipeBottomY = canvas.height - GROUND_HEIGHT - 60;
@@ -408,12 +434,17 @@ function CanvasGame() {
           pipeSpeed = tempSpeed;
           backgroundSpeed = tempBgSpeed;
           setIsGameover(true);
-          clearInterval(intervalRef.current);
+          cancelAnimationFrame(frameId);
         }
       }
-    }, 9);
+      console.log("yo its frame id", frameId);
+      if (!hasCrashedRef.current) frameId = requestAnimationFrame(GameLoop);
+    }
+    frameId = requestAnimationFrame(GameLoop);
 
-    return () => clearInterval(intervalRef.current);
+    // will end here............................................................................
+
+    return () => cancelAnimationFrame(frameId);
   }, [isGameStarted]);
 
   function handleClick() {
@@ -465,20 +496,20 @@ function CanvasGame() {
           </div>
           <div className="speed-btn-container">
             <button
-              className={pipeSpeed === -1 ? "selected-speed" : ""}
-              onClick={() => handleSpeed(1)}
+              className={pipeSpeed === -2.5 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(2.5)}
             >
               1X
             </button>
             <button
-              className={pipeSpeed === -2 ? "selected-speed" : ""}
-              onClick={() => handleSpeed(2)}
+              className={pipeSpeed === -3.5 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(3.5)}
             >
               2X
             </button>
             <button
-              className={pipeSpeed === -3 ? "selected-speed" : ""}
-              onClick={() => handleSpeed(3)}
+              className={pipeSpeed === -4.5 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(4.5)}
             >
               3X
             </button>
@@ -491,4 +522,3 @@ function CanvasGame() {
 export default CanvasGame;
 
 // coin behind pipe
-// animation frame branch
