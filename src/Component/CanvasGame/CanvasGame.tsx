@@ -31,7 +31,6 @@ const DOWN_ANGLE = 75;
 const UP_ANGLE = -30;
 const COIN_WIDTH = 55;
 const COIN_HEIGHT = 55;
-const COIN_GAP = 500;
 let backgroundSpeed = -0.2;
 
 class Component {
@@ -64,8 +63,8 @@ class Component {
     this.angle = 0;
   }
 
-  update(frameCounter: number, currentTime: number, lastFlap: number) {
-    if (currentTime / 1000 - lastFlap / 1000 > 0.1) {
+  update(currentTime: number, lastFlap: number, isPipeCrash: boolean) {
+    if (currentTime / 1000 - lastFlap / 1000 > 0.1 && !isPipeCrash) {
       currentIdx = (currentIdx + 1) % this.birdFrames.length;
     }
     const birdImage = this.birdFrames[currentIdx];
@@ -96,7 +95,7 @@ class Component {
     }
 
     this.hitBottom(canvasHeight, hasCrashedRef);
-    this.hitTop(hasCrashedRef, pipeCrashRef);
+    this.hitTop(pipeCrashRef);
   }
 
   hitBottom(canvasHeight: number, hasCrashedRef: any) {
@@ -106,10 +105,9 @@ class Component {
     }
   }
 
-  hitTop(hasCrashedRef: any, pipeCrashRef: any) {
+  hitTop(pipeCrashRef: any) {
     if (this.y < 0 + this.width / 2.6) {
       pipeCrashRef.current = true;
-      // console.log(hasCrashedRef);
     }
   }
 
@@ -153,10 +151,6 @@ class Component {
 function CanvasGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gamePieceRef = useRef<Component | null>(null);
-
-  // const intervalRef = useRef<any | null>(null);
-  // const animationRef = useRef<any | null>(null);
-
   const pipesRef = useRef<Pipe[]>([]);
   const coinRef = useRef<Coin | null>(null);
   const bottomBg = new Image();
@@ -246,9 +240,7 @@ function CanvasGame() {
       ctx
     );
 
-    let frameCounter = 0;
-
-    // start......................................................................................
+    // start........................................................................................
     let frameId: number = 0;
     let lastTime: number = 0;
     let lastFlap = 0;
@@ -264,7 +256,6 @@ function CanvasGame() {
       if (!lastTime) lastTime = currentTime;
       if (!lastFlap) lastFlap = currentTime;
 
-      frameCounter++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       mainBgXRef.current += backgroundSpeed;
@@ -335,14 +326,10 @@ function CanvasGame() {
       coinRef.current?.move();
       coinRef.current?.draw();
 
-      // time logic
-      // pipeSpeed = -2
-
       const pipeDistance = 5;
       let currentDistance = -1 * pipeSpeed * deltaTime;
 
       if (currentDistance > pipeDistance) {
-        // lastDistance = currentDistance;
         lastTime = currentTime;
 
         const gap = PIPE_GAP;
@@ -424,17 +411,14 @@ function CanvasGame() {
 
           if (isOverlapping) {
             coin.coinPipeCrash = true;
-            // console.log("Coin is crashing with pipe");
           }
         }
       });
 
       if (piece) {
         piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
-        // piece.update(frameCounter);
-        piece.update(frameCounter, currentTime, lastFlap);
+        piece.update(currentTime, lastFlap, pipeCrashRef.current);
         if (currentTime / 1000 - lastFlap / 1000 > 0.1) lastFlap = currentTime;
-        // console.log("time is......", currentTime/1000 - lastFlap/1000)
       }
 
       if (pipeCrashRef.current || hasCrashedRef.current) {
@@ -445,7 +429,6 @@ function CanvasGame() {
           cancelAnimationFrame(frameId);
         }
       }
-      // console.log("yo its frame id", frameId);
       if (!hasCrashedRef.current) frameId = requestAnimationFrame(GameLoop);
     }
     frameId = requestAnimationFrame(GameLoop);
@@ -528,5 +511,3 @@ function CanvasGame() {
   );
 }
 export default CanvasGame;
-
-// coin behind pipe
