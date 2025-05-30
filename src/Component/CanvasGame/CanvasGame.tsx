@@ -6,7 +6,7 @@ import useSound from "use-sound";
 import "./CanvasGame.css";
 import { ProjectAudio } from "../../assets/ProjectAudio";
 
-export let pipeSpeed = -3.5; //-3.5  -4.5 -2.5
+export let pipeSpeed = -3.5;
 
 interface ClassComponentProps {
   width: number;
@@ -23,7 +23,7 @@ const BIRD_WIDTH = 60;
 const BIRD_HEIGHT = 40;
 const BIRD_INITIAL_X = CANVAS_WIDTH / 3.5;
 const BIRD_INITIAL_Y = CANVAS_HEIGHT / 4.3;
-const JUMP_SPEED = -6.4; // -4
+const JUMP_SPEED = -6.4;
 const PIPE_WIDTH = 85;
 const PIPE_MIN_HEIGHT = 150;
 const PIPE_GAP = 150;
@@ -31,6 +31,11 @@ const DOWN_ANGLE = 75;
 const UP_ANGLE = -30;
 const COIN_WIDTH = 55;
 const COIN_HEIGHT = 55;
+const WING_MOVEMENT = 0.1;
+const DOWN_ROTATION_MOVEMENT = 0.04;
+const PIPE_DISTANCE = 5;
+const COIN_DISTANCE = 18;
+
 let backgroundSpeed = -0.2;
 
 class Component {
@@ -64,7 +69,7 @@ class Component {
   }
 
   update(currentTime: number, lastFlap: number, isPipeCrash: boolean) {
-    if (currentTime / 1000 - lastFlap / 1000 > 0.1 && !isPipeCrash) {
+    if (currentTime / 1000 - lastFlap / 1000 > WING_MOVEMENT && !isPipeCrash) {
       currentIdx = (currentIdx + 1) % this.birdFrames.length;
     }
     const birdImage = this.birdFrames[currentIdx];
@@ -91,7 +96,10 @@ class Component {
     if (this.gravitySpeed < 0) {
       this.angle = maxUpwardAngle;
     } else {
-      this.angle = Math.min(maxDownwardAngle, this.angle + 0.04);
+      this.angle = Math.min(
+        maxDownwardAngle,
+        this.angle + DOWN_ROTATION_MOVEMENT
+      );
     }
 
     this.hitBottom(canvasHeight, hasCrashedRef);
@@ -290,10 +298,9 @@ function CanvasGame() {
         GROUND_HEIGHT
       );
 
-      let coinDistance = 5;
       let coinCovered = -1 * pipeSpeed * deltaTime;
 
-      if (coinCovered > coinDistance) {
+      if (coinCovered > COIN_DISTANCE) {
         coinCovered = 0;
         coinRef.current = new Coin(
           {
@@ -326,10 +333,9 @@ function CanvasGame() {
       coinRef.current?.move();
       coinRef.current?.draw();
 
-      const pipeDistance = 5;
       let currentDistance = -1 * pipeSpeed * deltaTime;
 
-      if (currentDistance > pipeDistance) {
+      if (currentDistance > PIPE_DISTANCE) {
         lastTime = currentTime;
 
         const gap = PIPE_GAP;
@@ -418,7 +424,8 @@ function CanvasGame() {
       if (piece) {
         piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
         piece.update(currentTime, lastFlap, pipeCrashRef.current);
-        if (currentTime / 1000 - lastFlap / 1000 > 0.1) lastFlap = currentTime;
+        if (currentTime / 1000 - lastFlap / 1000 > WING_MOVEMENT)
+          lastFlap = currentTime;
       }
 
       if (pipeCrashRef.current || hasCrashedRef.current) {
@@ -433,7 +440,7 @@ function CanvasGame() {
     }
     frameId = requestAnimationFrame(GameLoop);
 
-    //end...........................................................................................
+    //  end.........................................................................................
 
     return () => cancelAnimationFrame(frameId);
   }, [isGameStarted]);
@@ -461,15 +468,16 @@ function CanvasGame() {
           <div className="game-score">
             <h4>{score}</h4>
           </div>
-          {isGameover && (
+          {isGameover && (<>
+          <img src= {ProjectImages.GAME_OVER} className="game-over-message"/>
             <div className="game-over-modal">
-              <h2>Game Over</h2>
               <h4>Score: {score}</h4>
               <h4>Best: {highScore}</h4>
               <button className="restart-button" onClick={restartGame}>
                 Restart
               </button>
             </div>
+            </>
           )}
         </div>
       )}
