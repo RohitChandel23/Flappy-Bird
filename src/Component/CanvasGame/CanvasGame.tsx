@@ -167,7 +167,6 @@ function CanvasGame() {
   const pipeCrashRef = useRef(false);
 
   const mainBg = new Image();
-  mainBg.src = ProjectImages.BACKGROUND_IMAGE;
   const mainBgXRef = useRef(0);
 
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -179,6 +178,8 @@ function CanvasGame() {
   const [playCoinSound] = useSound(ProjectAudio.COIN_CRASH);
   let tempSpeed = pipeSpeed;
   let tempBgSpeed = backgroundSpeed;
+
+
 
   function restartGame() {
     pipeCrashRef.current = false;
@@ -256,6 +257,11 @@ function CanvasGame() {
     function GameLoop(currentTime: number) {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
       const canvas = canvasRef.current;
+
+          mainBg.src = score < 5 ? ProjectImages.BACKGROUND_IMAGE : ProjectImages.BACKGROUND_NIGHT;
+          if(score > 5)
+            console.log("night...................")
+
 
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
