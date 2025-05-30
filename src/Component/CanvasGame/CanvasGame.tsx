@@ -34,7 +34,6 @@ const COIN_HEIGHT = 55;
 const COIN_GAP = 500;
 let backgroundSpeed = -0.2;
 
-
 class Component {
   width: number;
   height: number;
@@ -67,7 +66,7 @@ class Component {
 
   update(frameCounter: number, currentTime: number, lastFlap: number) {
     if (currentTime / 1000 - lastFlap / 1000 > 0.1) {
-      currentIdx = (currentIdx + 1) % this.birdFrames.length; 
+      currentIdx = (currentIdx + 1) % this.birdFrames.length;
     }
     const birdImage = this.birdFrames[currentIdx];
     this.ctx.save();
@@ -110,7 +109,7 @@ class Component {
   hitTop(hasCrashedRef: any, pipeCrashRef: any) {
     if (this.y < 0 + this.width / 2.6) {
       pipeCrashRef.current = true;
-      console.log(hasCrashedRef);
+      // console.log(hasCrashedRef);
     }
   }
 
@@ -434,11 +433,9 @@ function CanvasGame() {
         piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
         // piece.update(frameCounter);
         piece.update(frameCounter, currentTime, lastFlap);
-        if((currentTime/1000 - lastFlap/1000) > 0.1) 
-        lastFlap = currentTime
-      // console.log("time is......", currentTime/1000 - lastFlap/1000)
+        if (currentTime / 1000 - lastFlap / 1000 > 0.1) lastFlap = currentTime;
+        // console.log("time is......", currentTime/1000 - lastFlap/1000)
       }
-
 
       if (pipeCrashRef.current || hasCrashedRef.current) {
         if (hasCrashedRef.current) {
