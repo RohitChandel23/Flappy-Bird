@@ -6,7 +6,7 @@ import useSound from "use-sound";
 import "./CanvasGame.css";
 import { ProjectAudio } from "../../assets/ProjectAudio";
 
-export let pipeSpeed = -2.5; //-3.5  -4.5 -2.5
+export let pipeSpeed = -3.5; //-3.5  -4.5 -2.5
 
 interface ClassComponentProps {
   width: number;
@@ -23,7 +23,7 @@ const BIRD_WIDTH = 60;
 const BIRD_HEIGHT = 40;
 const BIRD_INITIAL_X = CANVAS_WIDTH / 3.5;
 const BIRD_INITIAL_Y = CANVAS_HEIGHT / 4.3;
-const JUMP_SPEED = -6.4; //-4
+const JUMP_SPEED = -6.4; // -4
 const PIPE_WIDTH = 85;
 const PIPE_MIN_HEIGHT = 150;
 const PIPE_GAP = 150;
@@ -33,6 +33,7 @@ const COIN_WIDTH = 55;
 const COIN_HEIGHT = 55;
 const COIN_GAP = 500;
 let backgroundSpeed = -0.2;
+
 
 class Component {
   width: number;
@@ -64,9 +65,9 @@ class Component {
     this.angle = 0;
   }
 
-  update(frameCounter: number) {
-    if (frameCounter % 10 === 0) {
-      currentIdx = (currentIdx + 1) % this.birdFrames.length;
+  update(frameCounter: number, currentTime: number, lastFlap: number) {
+    if (currentTime / 1000 - lastFlap / 1000 > 0.1) {
+      currentIdx = (currentIdx + 1) % this.birdFrames.length; 
     }
     const birdImage = this.birdFrames[currentIdx];
     this.ctx.save();
@@ -248,13 +249,13 @@ function CanvasGame() {
 
     let frameCounter = 0;
 
-    // function will start here.................................................
+    // start......................................................................................
     let frameId: number = 0;
     let lastTime: number = 0;
+    let lastFlap = 0;
 
     function GameLoop(currentTime: number) {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
-
       const canvas = canvasRef.current;
 
       if (!canvas) return;
@@ -262,6 +263,7 @@ function CanvasGame() {
       if (!ctx) return;
 
       if (!lastTime) lastTime = currentTime;
+      if (!lastFlap) lastFlap = currentTime;
 
       frameCounter++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -297,12 +299,12 @@ function CanvasGame() {
         canvas.width,
         GROUND_HEIGHT
       );
-      
-      let coinDistance = 5;
-      let coinCovered = -1 * pipeSpeed * deltaTime 
 
-      if(coinCovered > coinDistance){
-        coinCovered = 0
+      let coinDistance = 5;
+      let coinCovered = -1 * pipeSpeed * deltaTime;
+
+      if (coinCovered > coinDistance) {
+        coinCovered = 0;
         coinRef.current = new Coin(
           {
             width: COIN_WIDTH,
@@ -423,15 +425,20 @@ function CanvasGame() {
 
           if (isOverlapping) {
             coin.coinPipeCrash = true;
-            console.log("Coin is crashing with pipe");
+            // console.log("Coin is crashing with pipe");
           }
         }
       });
 
       if (piece) {
         piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
-        piece.update(frameCounter);
+        // piece.update(frameCounter);
+        piece.update(frameCounter, currentTime, lastFlap);
+        if((currentTime/1000 - lastFlap/1000) > 0.1) 
+        lastFlap = currentTime
+      // console.log("time is......", currentTime/1000 - lastFlap/1000)
       }
+
 
       if (pipeCrashRef.current || hasCrashedRef.current) {
         if (hasCrashedRef.current) {
@@ -442,12 +449,11 @@ function CanvasGame() {
         }
       }
       // console.log("yo its frame id", frameId);
-      if (!hasCrashedRef.current) 
-        frameId = requestAnimationFrame(GameLoop);
+      if (!hasCrashedRef.current) frameId = requestAnimationFrame(GameLoop);
     }
     frameId = requestAnimationFrame(GameLoop);
 
-    // will end here............................................................................
+    //end...........................................................................................
 
     return () => cancelAnimationFrame(frameId);
   }, [isGameStarted]);
@@ -501,20 +507,20 @@ function CanvasGame() {
           </div>
           <div className="speed-btn-container">
             <button
-              className={pipeSpeed === -2.5 ? "selected-speed" : ""}
-              onClick={() => handleSpeed(2.5)}
+              className={pipeSpeed === -3.5 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(3.5)}
             >
               1X
             </button>
             <button
-              className={pipeSpeed === -3.5 ? "selected-speed" : ""}
-              onClick={() => handleSpeed(3.5)}
+              className={pipeSpeed === -5 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(5)}
             >
               2X
             </button>
             <button
-              className={pipeSpeed === -4.5 ? "selected-speed" : ""}
-              onClick={() => handleSpeed(4.5)}
+              className={pipeSpeed === -6 ? "selected-speed" : ""}
+              onClick={() => handleSpeed(6)}
             >
               3X
             </button>
