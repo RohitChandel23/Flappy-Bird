@@ -64,8 +64,8 @@ class Component {
     this.angle = 0;
   }
 
-  update(frameCounter: number) {
-    if (frameCounter % 10 === 0) {
+  update(frameCounter: number, isPipeCrash: boolean) {
+    if (frameCounter % 10 === 0 && !isPipeCrash) {
       currentIdx = (currentIdx + 1) % this.birdFrames.length;
     }
     const birdImage = this.birdFrames[currentIdx];
@@ -400,7 +400,7 @@ function CanvasGame() {
 
       if (piece) {
         piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
-        piece.update(frameCounter);
+        piece.update(frameCounter, pipeCrashRef.current);
       }
 
       if (pipeCrashRef.current || hasCrashedRef.current) {
