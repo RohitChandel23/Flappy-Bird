@@ -23,7 +23,7 @@ const BIRD_WIDTH = 60;
 const BIRD_HEIGHT = 40;
 const BIRD_INITIAL_X = CANVAS_WIDTH / 3.5;
 const BIRD_INITIAL_Y = CANVAS_HEIGHT / 4.3;
-const JUMP_SPEED = -6.4;
+const JUMP_SPEED = -10;
 const PIPE_WIDTH = 85;
 const PIPE_MIN_HEIGHT = 150;
 const PIPE_GAP = 150;
@@ -58,7 +58,7 @@ class Component {
     this.y = props.y;
     this.speedX = 0;
     this.speedY = 0;
-    this.gravity = 0.3;
+    this.gravity = 1;
     this.gravitySpeed = 0;
     this.ctx = ctx;
     this.birdFrames = [new Image(), new Image(), new Image()];
@@ -258,9 +258,11 @@ function CanvasGame() {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
       const canvas = canvasRef.current;
 
-          mainBg.src = score < 5 ? ProjectImages.BACKGROUND_IMAGE : ProjectImages.BACKGROUND_NIGHT;
-          if(score > 5)
-            console.log("night...................")
+      mainBg.src = ProjectImages.BACKGROUND_IMAGE;
+
+          // mainBg.src = score < 5 ? ProjectImages.BACKGROUND_IMAGE : ProjectImages.BACKGROUND_NIGHT;
+          // if(score > 5)
+          //   console.log("night...................")
 
 
       if (!canvas) return;
