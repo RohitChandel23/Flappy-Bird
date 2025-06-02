@@ -1,0 +1,247 @@
+{
+  "ver": "1.0.8",
+  "importer": "sprite-atlas",
+  "imported": true,
+  "uuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {
+    "58def": {
+      "importer": "sprite-frame",
+      "uuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77@58def",
+      "displayName": "",
+      "id": "58def",
+      "name": "Small_BunBun1",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -4,
+        "offsetY": -2,
+        "trimX": 1,
+        "trimY": 103,
+        "width": 64,
+        "height": 102,
+        "rawWidth": 80,
+        "rawHeight": 116,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "3bbd69f5-4084-4259-a12d-5cbe96d5be9e@6c48a",
+        "atlasUuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c74bd": {
+      "importer": "sprite-frame",
+      "uuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77@c74bd",
+      "displayName": "",
+      "id": "c74bd",
+      "name": "Small_BunBun2",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -2,
+        "offsetY": -3,
+        "trimX": 1,
+        "trimY": 1,
+        "width": 68,
+        "height": 100,
+        "rawWidth": 80,
+        "rawHeight": 116,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "3bbd69f5-4084-4259-a12d-5cbe96d5be9e@6c48a",
+        "atlasUuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7babb": {
+      "importer": "sprite-frame",
+      "uuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77@7babb",
+      "displayName": "",
+      "id": "7babb",
+      "name": "Small_BunBun3",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 207,
+        "width": 70,
+        "height": 96,
+        "rawWidth": 80,
+        "rawHeight": 116,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "3bbd69f5-4084-4259-a12d-5cbe96d5be9e@6c48a",
+        "atlasUuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f6ab9": {
+      "importer": "sprite-frame",
+      "uuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77@f6ab9",
+      "displayName": "",
+      "id": "f6ab9",
+      "name": "Small_BunBun4",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -2,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 305,
+        "width": 72,
+        "height": 96,
+        "rawWidth": 80,
+        "rawHeight": 116,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "3bbd69f5-4084-4259-a12d-5cbe96d5be9e@6c48a",
+        "atlasUuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6c894": {
+      "importer": "sprite-frame",
+      "uuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77@6c894",
+      "displayName": "",
+      "id": "6c894",
+      "name": "Small_BunBun5",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -2,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 403,
+        "width": 72,
+        "height": 96,
+        "rawWidth": 80,
+        "rawHeight": 116,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "3bbd69f5-4084-4259-a12d-5cbe96d5be9e@6c48a",
+        "atlasUuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "atlasTextureName": "Small_BunBunAnimationSpritesheet.png",
+    "format": 3,
+    "uuid": "f7ff6a3f-a2e9-45e4-936f-6c61e74dab77",
+    "textureUuid": "3bbd69f5-4084-4259-a12d-5cbe96d5be9e@6c48a"
+  }
+}

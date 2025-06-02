@@ -1,0 +1,247 @@
+{
+  "ver": "1.0.8",
+  "importer": "sprite-atlas",
+  "imported": true,
+  "uuid": "0b496f73-a611-466a-a7a8-5b486e803cda",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {
+    "b16e2": {
+      "importer": "sprite-frame",
+      "uuid": "0b496f73-a611-466a-a7a8-5b486e803cda@b16e2",
+      "displayName": "",
+      "id": "b16e2",
+      "name": "Small_Foxy1",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 1,
+        "width": 70,
+        "height": 86,
+        "rawWidth": 80,
+        "rawHeight": 104,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "aa049f54-7fe8-49f8-a708-b98cf63e7411@6c48a",
+        "atlasUuid": "0b496f73-a611-466a-a7a8-5b486e803cda"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "0b786": {
+      "importer": "sprite-frame",
+      "uuid": "0b496f73-a611-466a-a7a8-5b486e803cda@0b786",
+      "displayName": "",
+      "id": "0b786",
+      "name": "Small_Foxy2",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 89,
+        "width": 72,
+        "height": 84,
+        "rawWidth": 80,
+        "rawHeight": 104,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "aa049f54-7fe8-49f8-a708-b98cf63e7411@6c48a",
+        "atlasUuid": "0b496f73-a611-466a-a7a8-5b486e803cda"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4c658": {
+      "importer": "sprite-frame",
+      "uuid": "0b496f73-a611-466a-a7a8-5b486e803cda@4c658",
+      "displayName": "",
+      "id": "4c658",
+      "name": "Small_Foxy3",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 175,
+        "width": 72,
+        "height": 84,
+        "rawWidth": 80,
+        "rawHeight": 104,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "aa049f54-7fe8-49f8-a708-b98cf63e7411@6c48a",
+        "atlasUuid": "0b496f73-a611-466a-a7a8-5b486e803cda"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "ca575": {
+      "importer": "sprite-frame",
+      "uuid": "0b496f73-a611-466a-a7a8-5b486e803cda@ca575",
+      "displayName": "",
+      "id": "ca575",
+      "name": "Small_Foxy4",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 261,
+        "width": 72,
+        "height": 84,
+        "rawWidth": 80,
+        "rawHeight": 104,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "aa049f54-7fe8-49f8-a708-b98cf63e7411@6c48a",
+        "atlasUuid": "0b496f73-a611-466a-a7a8-5b486e803cda"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3bd22": {
+      "importer": "sprite-frame",
+      "uuid": "0b496f73-a611-466a-a7a8-5b486e803cda@3bd22",
+      "displayName": "",
+      "id": "3bd22",
+      "name": "Small_Foxy5",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 175,
+        "width": 72,
+        "height": 84,
+        "rawWidth": 80,
+        "rawHeight": 104,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "aa049f54-7fe8-49f8-a708-b98cf63e7411@6c48a",
+        "atlasUuid": "0b496f73-a611-466a-a7a8-5b486e803cda"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "atlasTextureName": "Small_FoxyAnimationSpritesheet.png",
+    "format": 3,
+    "uuid": "0b496f73-a611-466a-a7a8-5b486e803cda",
+    "textureUuid": "aa049f54-7fe8-49f8-a708-b98cf63e7411@6c48a"
+  }
+}

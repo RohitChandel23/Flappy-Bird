@@ -1,0 +1,247 @@
+{
+  "ver": "1.0.8",
+  "importer": "sprite-atlas",
+  "imported": true,
+  "uuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {
+    "d98ad": {
+      "importer": "sprite-frame",
+      "uuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985@d98ad",
+      "displayName": "",
+      "id": "d98ad",
+      "name": "Small_Ellie1",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -3,
+        "trimX": 1,
+        "trimY": 1,
+        "width": 76,
+        "height": 97,
+        "rawWidth": 80,
+        "rawHeight": 103,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "97ac5628-5d81-4eee-bd4f-27a1921c9cf4@6c48a",
+        "atlasUuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a9356": {
+      "importer": "sprite-frame",
+      "uuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985@a9356",
+      "displayName": "",
+      "id": "a9356",
+      "name": "Small_Ellie2",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -4,
+        "trimX": 1,
+        "trimY": 100,
+        "width": 76,
+        "height": 95,
+        "rawWidth": 80,
+        "rawHeight": 103,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "97ac5628-5d81-4eee-bd4f-27a1921c9cf4@6c48a",
+        "atlasUuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "fbe12": {
+      "importer": "sprite-frame",
+      "uuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985@fbe12",
+      "displayName": "",
+      "id": "fbe12",
+      "name": "Small_Ellie3",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 197,
+        "width": 76,
+        "height": 91,
+        "rawWidth": 80,
+        "rawHeight": 103,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "97ac5628-5d81-4eee-bd4f-27a1921c9cf4@6c48a",
+        "atlasUuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d5ed4": {
+      "importer": "sprite-frame",
+      "uuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985@d5ed4",
+      "displayName": "",
+      "id": "d5ed4",
+      "name": "Small_Ellie4",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -6,
+        "trimX": 1,
+        "trimY": 290,
+        "width": 76,
+        "height": 91,
+        "rawWidth": 80,
+        "rawHeight": 103,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "97ac5628-5d81-4eee-bd4f-27a1921c9cf4@6c48a",
+        "atlasUuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d54c6": {
+      "importer": "sprite-frame",
+      "uuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985@d54c6",
+      "displayName": "",
+      "id": "d54c6",
+      "name": "Small_Ellie5",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -5,
+        "trimX": 1,
+        "trimY": 197,
+        "width": 76,
+        "height": 91,
+        "rawWidth": 80,
+        "rawHeight": 103,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "97ac5628-5d81-4eee-bd4f-27a1921c9cf4@6c48a",
+        "atlasUuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "atlasTextureName": "Small_EllieAnimationSpritesheet.png",
+    "format": 3,
+    "uuid": "76ea0937-3ae7-48ed-99f7-a268bbdb4985",
+    "textureUuid": "97ac5628-5d81-4eee-bd4f-27a1921c9cf4@6c48a"
+  }
+}

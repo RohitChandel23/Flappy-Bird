@@ -1,0 +1,247 @@
+{
+  "ver": "1.0.8",
+  "importer": "sprite-atlas",
+  "imported": true,
+  "uuid": "f680b7a8-676b-40cb-8109-89b183f5882a",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {
+    "e84cf": {
+      "importer": "sprite-frame",
+      "uuid": "f680b7a8-676b-40cb-8109-89b183f5882a@e84cf",
+      "displayName": "",
+      "id": "e84cf",
+      "name": "Small_Salmie1",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -4,
+        "trimX": 1,
+        "trimY": 1,
+        "width": 80,
+        "height": 80,
+        "rawWidth": 80,
+        "rawHeight": 108,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "4cb8bc68-6e20-4f5c-bb84-a0b65f09083b@6c48a",
+        "atlasUuid": "f680b7a8-676b-40cb-8109-89b183f5882a"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d2022": {
+      "importer": "sprite-frame",
+      "uuid": "f680b7a8-676b-40cb-8109-89b183f5882a@d2022",
+      "displayName": "",
+      "id": "d2022",
+      "name": "Small_Salmie2",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1,
+        "offsetY": -4,
+        "trimX": 85,
+        "trimY": 81,
+        "width": 78,
+        "height": 80,
+        "rawWidth": 80,
+        "rawHeight": 108,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "4cb8bc68-6e20-4f5c-bb84-a0b65f09083b@6c48a",
+        "atlasUuid": "f680b7a8-676b-40cb-8109-89b183f5882a"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "90ddd": {
+      "importer": "sprite-frame",
+      "uuid": "f680b7a8-676b-40cb-8109-89b183f5882a@90ddd",
+      "displayName": "",
+      "id": "90ddd",
+      "name": "Small_Salmie3",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": true,
+        "offsetX": -1,
+        "offsetY": -3,
+        "trimX": 1,
+        "trimY": 83,
+        "width": 78,
+        "height": 82,
+        "rawWidth": 80,
+        "rawHeight": 108,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "4cb8bc68-6e20-4f5c-bb84-a0b65f09083b@6c48a",
+        "atlasUuid": "f680b7a8-676b-40cb-8109-89b183f5882a"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "96daa": {
+      "importer": "sprite-frame",
+      "uuid": "f680b7a8-676b-40cb-8109-89b183f5882a@96daa",
+      "displayName": "",
+      "id": "96daa",
+      "name": "Small_Salmie4",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": true,
+        "offsetX": -1,
+        "offsetY": -3,
+        "trimX": 83,
+        "trimY": 1,
+        "width": 78,
+        "height": 82,
+        "rawWidth": 80,
+        "rawHeight": 108,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "4cb8bc68-6e20-4f5c-bb84-a0b65f09083b@6c48a",
+        "atlasUuid": "f680b7a8-676b-40cb-8109-89b183f5882a"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e13fb": {
+      "importer": "sprite-frame",
+      "uuid": "f680b7a8-676b-40cb-8109-89b183f5882a@e13fb",
+      "displayName": "",
+      "id": "e13fb",
+      "name": "Small_Salmie5",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": true,
+        "offsetX": -1,
+        "offsetY": -3,
+        "trimX": 1,
+        "trimY": 83,
+        "width": 78,
+        "height": 82,
+        "rawWidth": 80,
+        "rawHeight": 108,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "4cb8bc68-6e20-4f5c-bb84-a0b65f09083b@6c48a",
+        "atlasUuid": "f680b7a8-676b-40cb-8109-89b183f5882a"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "atlasTextureName": "Small_SalmieAnimationSpritesheet.png",
+    "format": 3,
+    "uuid": "f680b7a8-676b-40cb-8109-89b183f5882a",
+    "textureUuid": "4cb8bc68-6e20-4f5c-bb84-a0b65f09083b@6c48a"
+  }
+}

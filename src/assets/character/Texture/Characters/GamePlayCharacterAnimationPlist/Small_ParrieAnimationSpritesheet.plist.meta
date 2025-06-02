@@ -1,0 +1,155 @@
+{
+  "ver": "1.0.8",
+  "importer": "sprite-atlas",
+  "imported": true,
+  "uuid": "32158733-a276-49fc-8a53-e1e4fe597a6b",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {
+    "43333": {
+      "importer": "sprite-frame",
+      "uuid": "32158733-a276-49fc-8a53-e1e4fe597a6b@43333",
+      "displayName": "",
+      "id": "43333",
+      "name": "Small_Parrie3",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -3,
+        "trimX": 1,
+        "trimY": 135,
+        "width": 78,
+        "height": 67,
+        "rawWidth": 80,
+        "rawHeight": 73,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "a2cf1158-aa25-42e6-b9fa-5d69bcb0ef90@6c48a",
+        "atlasUuid": "32158733-a276-49fc-8a53-e1e4fe597a6b"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "8e1cd": {
+      "importer": "sprite-frame",
+      "uuid": "32158733-a276-49fc-8a53-e1e4fe597a6b@8e1cd",
+      "displayName": "",
+      "id": "8e1cd",
+      "name": "Small_Parrie1",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -3,
+        "trimX": 1,
+        "trimY": 1,
+        "width": 80,
+        "height": 65,
+        "rawWidth": 80,
+        "rawHeight": 73,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "a2cf1158-aa25-42e6-b9fa-5d69bcb0ef90@6c48a",
+        "atlasUuid": "32158733-a276-49fc-8a53-e1e4fe597a6b"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e45c5": {
+      "importer": "sprite-frame",
+      "uuid": "32158733-a276-49fc-8a53-e1e4fe597a6b@e45c5",
+      "displayName": "",
+      "id": "e45c5",
+      "name": "Small_Parrie2",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -3,
+        "trimX": 1,
+        "trimY": 68,
+        "width": 80,
+        "height": 65,
+        "rawWidth": 80,
+        "rawHeight": 73,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "a2cf1158-aa25-42e6-b9fa-5d69bcb0ef90@6c48a",
+        "atlasUuid": "32158733-a276-49fc-8a53-e1e4fe597a6b"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "atlasTextureName": "Small_ParrieAnimationSpritesheet.png",
+    "format": 3,
+    "uuid": "32158733-a276-49fc-8a53-e1e4fe597a6b",
+    "textureUuid": "a2cf1158-aa25-42e6-b9fa-5d69bcb0ef90@6c48a"
+  }
+}
