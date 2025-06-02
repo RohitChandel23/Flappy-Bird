@@ -12,15 +12,15 @@ import BACKGROUND_NIGHT from "./icons/background-night.png";
 import BIRD2_UP from "./icons/blueBird/blue-bird-1.png";
 import BIRD2_DOWN from "./icons/blueBird/blue-bird-2.png";
 import BIRD2_MID from "./icons/blueBird/blue-bird-3.png";
-
 import BIRD3_UP from "./icons/greenBird/green-bird-1.png";
 import BIRD3_DOWN from "./icons/greenBird/green-bird-2.png";
 import BIRD3_MID from "./icons/greenBird/green-bird-3.png";
-
 import BIRD4_UP from "./icons/bird4/BIRD4_UP.png";
 import BIRD4_MID from "./icons/bird4/BIRD4_MID.png";
 import BIRD4_DOWN from "./icons/bird4/BIRD4_DOWN.png";
-
+import BIRD5_UP from './icons/bird5/bird5_up.png';
+import BIRD5_MID from './icons/bird5/bird5_mid.png';
+import BIRD5_DOWN from './icons/bird5/bird5_down.png'
 import ARROW from "./icons/arrow.png";
 
 export const ProjectImages = {
@@ -41,9 +41,11 @@ export const ProjectImages = {
   BIRD3_UP,
   BIRD3_DOWN,
   BIRD3_MID,
-
   BIRD4_UP,
   BIRD4_MID,
   BIRD4_DOWN,
+  BIRD5_UP,
+  BIRD5_MID,
+  BIRD5_DOWN,
   ARROW,
 };

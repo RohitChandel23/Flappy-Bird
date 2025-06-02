@@ -95,18 +95,6 @@
   top: 23%;
 }
 
-/* .game-over-modal{
-  position: absolute;
-  height: auto;
-  width:180px;
-  text-align: center;
-  padding:1% 2% 2% 1%;
-  border-radius: 4px;
-  box-shadow: 20px 20px 40px grey;
-  background-color: rgb(255, 255, 221);
-  font-family: "Press Start 2P", system-ui;
-}  */
-
 .game-over-modal {
   position: absolute;
   top: 48%;
@@ -128,22 +116,6 @@
 .game-over-modal h4{
   margin-top: 13%;
 }
-
-/* .game-over-modal button{
-  font-size: 19px;
-  padding: 5% 8% 5% 8%;
-  font-family: "Press Start 2P", system-ui;
-  background-color: rgb(211, 74, 74);
-  color:white;
-  border: none;
-  border-radius:8px;
-  cursor: pointer;
-  margin-top:12%;
-}
-
-.restart-button:hover{
-    background-color: rgb(192, 62, 62);
-} */
 
 .gif-container{
   width: 200px;
@@ -239,6 +211,7 @@ border-radius: 4px;
 .retry-button:hover {
   transform: scale(1.05);
 }
+
 
 
 

@@ -15,12 +15,11 @@ interface ClassComponentProps {
   y: number;
 }
 
-let currentIdx = 0;
 const CANVAS_WIDTH = 480;
 const CANVAS_HEIGHT = 750;
 const GROUND_HEIGHT = 95;
 const BIRD_WIDTH = 50;
-const BIRD_HEIGHT = 45;
+const BIRD_HEIGHT = 40;
 const BIRD_INITIAL_X = CANVAS_WIDTH / 3.5;
 const BIRD_INITIAL_Y = CANVAS_HEIGHT / 4.3;
 const JUMP_SPEED = -6;
@@ -35,7 +34,7 @@ const WING_MOVEMENT = 0.1;
 const DOWN_ROTATION_MOVEMENT = 0.04;
 const PIPE_DISTANCE = 5;
 const COIN_DISTANCE = 23;
-
+let currentIdx = 0;
 let backgroundSpeed = -0.2;
 
 class Component {
@@ -87,6 +86,12 @@ class Component {
         this.birdFrames[2].src = ProjectImages.BIRD4_DOWN;
         break;
 
+      case "BIRD5":
+        this.birdFrames[0].src = ProjectImages.BIRD5_UP;
+        this.birdFrames[1].src = ProjectImages.BIRD5_MID;
+        this.birdFrames[2].src = ProjectImages.BIRD5_DOWN;
+        break;
+
       default:
         this.birdFrames[0].src = ProjectImages.BIRD1_UP;
         this.birdFrames[1].src = ProjectImages.BIRD1_MID;
@@ -113,7 +118,12 @@ class Component {
     this.ctx.restore();
   }
 
-  newPos(canvasHeight: number, hasCrashedRef: any, pipeCrashRef: any, playHitSound:any) {
+  newPos(
+    canvasHeight: number,
+    hasCrashedRef: any,
+    pipeCrashRef: any,
+    playHitSound: any
+  ) {
     this.gravitySpeed += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
@@ -135,15 +145,14 @@ class Component {
 
   hitBottom(canvasHeight: number, hasCrashedRef: any) {
     const bottom = canvasHeight - GROUND_HEIGHT - this.height;
-    if (this.y > bottom) {
+    if (this.y > bottom ) {
       hasCrashedRef.current = true;
     }
   }
 
   hitTop(pipeCrashRef: any, playHitSound: any) {
     if (this.y < 0 + this.width / 2.6) {
-      if(!pipeCrashRef.current)
-              playHitSound();
+      if (!pipeCrashRef.current) playHitSound();
       pipeCrashRef.current = true;
     }
   }
@@ -192,17 +201,16 @@ function CanvasGame() {
   const coinRef = useRef<Coin | null>(null);
   const bottomBg = new Image();
   bottomBg.src = ProjectImages.BOTTOM_BG;
+
   const bottomBgXRef = useRef(0);
   const pipeCrashRef = useRef(false);
-
   const mainBg = new Image();
   const mainBgXRef = useRef(0);
-
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [score, setScore] = useState(0);
   const scoreRef = useRef(0);
   const [isGameover, setIsGameover] = useState(false);
-  const hasCrashedRef = useRef(false);
+  const hasCrashedRef = useRef<boolean>(false);
   const [highScore, setHighScore] = useState<number | null>(0);
   // const [play] = useSound(ProjectAudio.GAME_OVER);
   const [play] = useSound("");
@@ -215,8 +223,10 @@ function CanvasGame() {
     { image: ProjectImages.BIRD2_UP, value: "BIRD2" },
     { image: ProjectImages.BIRD3_UP, value: "BIRD3" },
     { image: ProjectImages.BIRD4_UP, value: "BIRD4" },
+    { image: ProjectImages.BIRD5_UP, value: "BIRD5" },
   ];
   const [birdIndex, setBirdIndex] = useState(0);
+  const [GameSpeed, setGameSpeed] = useState(-2);
 
   let tempSpeed = pipeSpeed;
   let tempBgSpeed = backgroundSpeed;
@@ -224,8 +234,6 @@ function CanvasGame() {
   //bird selection
   function birdSelection(arrowType: string) {
     if (arrowType == "right-arrow" && birdIndex + 1 != birdData.length) {
-      console.log("bird index", birdIndex);
-      console.log("toatl bird", birdData.length);
       setBirdIndex((birdIndex + 1) % birdData.length);
       setSelectedBird(birdData[(birdIndex + 1) % birdData.length].value);
     } else if (arrowType == "left-arrow" && birdIndex != 0) {
@@ -247,7 +255,8 @@ function CanvasGame() {
 
   function handleSpeed(selectedSpeed: number) {
     pipeSpeed = -selectedSpeed;
-    setIsGameStarted(true);
+    // setIsGameStarted(true);
+    setGameSpeed(-selectedSpeed);
   }
 
   function handleKeyDown(e: KeyboardEvent) {
@@ -260,14 +269,11 @@ function CanvasGame() {
         !isGameover
       ) {
         gamePieceRef.current.jump();
-        console.log("jump");
         playJumpSound();
       } else if (isGameover) {
         restartGame();
-        console.log("restart game");
       } else if (!isGameStarted) {
         setIsGameStarted(true);
-        console.log("starts the game");
       }
     }
   }
@@ -297,8 +303,8 @@ function CanvasGame() {
 
     gamePieceRef.current = new Component(
       {
-        width: BIRD_WIDTH,
-        height: BIRD_HEIGHT,
+        width:  BIRD_WIDTH,    //50
+        height: (selectedBird == "BIRD2" || selectedBird == "BIRD3") ? 50 : BIRD_HEIGHT,  //40
         x: BIRD_INITIAL_X,
         y: BIRD_INITIAL_Y,
       },
@@ -306,7 +312,6 @@ function CanvasGame() {
       selectedBird
     );
 
-// start........................................................................................
     let frameId: number = 0;
     let lastTime: number = 0;
     let lastFlap = 0;
@@ -314,7 +319,7 @@ function CanvasGame() {
     function GameLoop(currentTime: number) {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
       const canvas = canvasRef.current;
-// mainBg.src = ProjectImages.BACKGROUND_IMAGE;
+      // mainBg.src = ProjectImages.BACKGROUND_IMAGE;
       mainBg.src =
         scoreRef.current < 20
           ? ProjectImages.BACKGROUND_IMAGE
@@ -507,7 +512,6 @@ function CanvasGame() {
     }
     frameId = requestAnimationFrame(GameLoop);
 
-    //  end.........................................................................................
     return () => cancelAnimationFrame(frameId);
   }, [isGameStarted, selectedBird]);
 
@@ -544,7 +548,10 @@ function CanvasGame() {
               <div className="game-over-modal">
                 <h4>Score: {score}</h4>
                 <h4>Best: {highScore}</h4>
-                <button className="restart-button retry-button" onClick={restartGame}>
+                <button
+                  className="restart-button retry-button"
+                  onClick={restartGame}
+                >
                   Restart
                 </button>
               </div>
@@ -584,19 +591,19 @@ function CanvasGame() {
 
           <div className="speed-btn-container">
             <button
-              className={pipeSpeed === -2 ? "selected-speed" : ""}
+              className={GameSpeed === -2 ? "selected-speed" : ""}
               onClick={() => handleSpeed(2)}
             >
               1X
             </button>
             <button
-              className={pipeSpeed === -3 ? "selected-speed" : ""}
+              className={GameSpeed === -3 ? "selected-speed" : ""}
               onClick={() => handleSpeed(3)}
             >
               2X
             </button>
             <button
-              className={pipeSpeed === -4 ? "selected-speed" : ""}
+              className={GameSpeed === -4 ? "selected-speed" : ""}
               onClick={() => handleSpeed(4)}
             >
               3X
