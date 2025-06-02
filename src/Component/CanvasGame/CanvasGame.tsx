@@ -227,6 +227,7 @@ function CanvasGame() {
   ];
   const [birdIndex, setBirdIndex] = useState(0);
   const [GameSpeed, setGameSpeed] = useState(-2);
+  // const bgImageRef = useRef(ProjectImages.BACKGROUND_IMAGE)
 
   let tempSpeed = pipeSpeed;
   let tempBgSpeed = backgroundSpeed;
@@ -319,11 +320,21 @@ function CanvasGame() {
     function GameLoop(currentTime: number) {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
       const canvas = canvasRef.current;
-      // mainBg.src = ProjectImages.BACKGROUND_IMAGE;
-      mainBg.src =
-        scoreRef.current < 20
-          ? ProjectImages.BACKGROUND_IMAGE
-          : ProjectImages.BACKGROUND_NIGHT;
+       mainBg.src = ProjectImages.BACKGROUND_IMAGE;
+
+      // if(scoreRef.current % 5 == 0){
+      //   if(bgImageRef.current == ProjectImages.BACKGROUND_IMAGE)
+      //     bgImageRef.current = ProjectImages.BACKGROUND_NIGHT
+      //   else
+      //   bgImageRef.current = ProjectImages.BACKGROUND_IMAGE
+      //   } 
+
+      //   mainBg.src = bgImageRef.current
+
+      // mainBg.src =
+      //   scoreRef.current < 20
+      //     ? ProjectImages.BACKGROUND_IMAGE
+      //     : ProjectImages.BACKGROUND_NIGHT;
 
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
