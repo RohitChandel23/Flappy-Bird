@@ -34,7 +34,7 @@ const COIN_HEIGHT = 55;
 const WING_MOVEMENT = 0.1;
 const DOWN_ROTATION_MOVEMENT = 0.04;
 const PIPE_DISTANCE = 5;
-const COIN_DISTANCE = 18;
+const COIN_DISTANCE = 23;
 
 let backgroundSpeed = -0.2;
 
@@ -113,7 +113,7 @@ class Component {
     this.ctx.restore();
   }
 
-  newPos(canvasHeight: number, hasCrashedRef: any, pipeCrashRef: any) {
+  newPos(canvasHeight: number, hasCrashedRef: any, pipeCrashRef: any, playHitSound:any) {
     this.gravitySpeed += this.gravity;
     this.x += this.speedX;
     this.y += this.speedY + this.gravitySpeed;
@@ -130,7 +130,7 @@ class Component {
     }
 
     this.hitBottom(canvasHeight, hasCrashedRef);
-    this.hitTop(pipeCrashRef);
+    this.hitTop(pipeCrashRef, playHitSound);
   }
 
   hitBottom(canvasHeight: number, hasCrashedRef: any) {
@@ -140,8 +140,10 @@ class Component {
     }
   }
 
-  hitTop(pipeCrashRef: any) {
+  hitTop(pipeCrashRef: any, playHitSound: any) {
     if (this.y < 0 + this.width / 2.6) {
+      if(!pipeCrashRef.current)
+              playHitSound();
       pipeCrashRef.current = true;
     }
   }
@@ -198,11 +200,15 @@ function CanvasGame() {
 
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
   const [isGameover, setIsGameover] = useState(false);
   const hasCrashedRef = useRef(false);
   const [highScore, setHighScore] = useState<number | null>(0);
-  const [play] = useSound(ProjectAudio.GAME_OVER);
+  // const [play] = useSound(ProjectAudio.GAME_OVER);
+  const [play] = useSound("");
   const [playCoinSound] = useSound(ProjectAudio.COIN_CRASH);
+  const [playJumpSound] = useSound(ProjectAudio.JUMP);
+  const [playHitSound] = useSound(ProjectAudio.HIT);
   const [selectedBird, setSelectedBird] = useState("BIRD1");
   const birdData = [
     { image: ProjectImages.BIRD1_UP, value: "BIRD1" },
@@ -231,6 +237,7 @@ function CanvasGame() {
   function restartGame() {
     pipeCrashRef.current = false;
     setScore(0);
+    scoreRef.current = 0;
     setIsGameover(false);
     pipesRef.current = [];
     coinRef.current = null;
@@ -254,6 +261,7 @@ function CanvasGame() {
       ) {
         gamePieceRef.current.jump();
         console.log("jump");
+        playJumpSound();
       } else if (isGameover) {
         restartGame();
         console.log("restart game");
@@ -298,7 +306,7 @@ function CanvasGame() {
       selectedBird
     );
 
-    // start........................................................................................
+// start........................................................................................
     let frameId: number = 0;
     let lastTime: number = 0;
     let lastFlap = 0;
@@ -306,13 +314,11 @@ function CanvasGame() {
     function GameLoop(currentTime: number) {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
       const canvas = canvasRef.current;
-
-      // mainBg.src = ProjectImages.BACKGROUND_IMAGE;
+// mainBg.src = ProjectImages.BACKGROUND_IMAGE;
       mainBg.src =
-        score < 5
+        scoreRef.current < 20
           ? ProjectImages.BACKGROUND_IMAGE
           : ProjectImages.BACKGROUND_NIGHT;
-      if (score > 5) console.log("night...................");
 
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
@@ -382,6 +388,7 @@ function CanvasGame() {
         !pipeCrashRef.current
       ) {
         setScore((prev) => prev + 5);
+        scoreRef.current = scoreRef.current + 5;
         coinRef.current.remove();
         playCoinSound();
       }
@@ -445,9 +452,11 @@ function CanvasGame() {
           piece.x > pipe.x + pipe.width
         ) {
           setScore((prev) => prev + 1);
+          scoreRef.current++;
           pipe.scored = true;
         }
         if (piece && (piece.crashWithPipe(pipe) || pipeCrashRef.current)) {
+          if (!pipeCrashRef.current) playHitSound();
           pipeCrashRef.current = true;
           pipeSpeed = 0;
           backgroundSpeed = 0;
@@ -479,7 +488,7 @@ function CanvasGame() {
       });
 
       if (piece) {
-        piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef);
+        piece.newPos(canvas.height, hasCrashedRef, pipeCrashRef, playHitSound);
         piece.update(currentTime, lastFlap, pipeCrashRef.current);
         if (currentTime / 1000 - lastFlap / 1000 > WING_MOVEMENT)
           lastFlap = currentTime;
@@ -487,6 +496,7 @@ function CanvasGame() {
 
       if (pipeCrashRef.current || hasCrashedRef.current) {
         if (hasCrashedRef.current) {
+          if (!pipeCrashRef.current) playHitSound();
           pipeSpeed = tempSpeed;
           backgroundSpeed = tempBgSpeed;
           setIsGameover(true);
@@ -498,19 +508,15 @@ function CanvasGame() {
     frameId = requestAnimationFrame(GameLoop);
 
     //  end.........................................................................................
-
     return () => cancelAnimationFrame(frameId);
   }, [isGameStarted, selectedBird]);
 
   function handleClick() {
     if (gamePieceRef.current && !pipeCrashRef.current) {
       gamePieceRef.current.jump();
+      playJumpSound();
     }
   }
-
-  // function handleBirdSelection(birdType: string) {
-  //   setSelectedBird(birdType);
-  // }
 
   return (
     <>
@@ -538,7 +544,7 @@ function CanvasGame() {
               <div className="game-over-modal">
                 <h4>Score: {score}</h4>
                 <h4>Best: {highScore}</h4>
-                <button className="restart-button" onClick={restartGame}>
+                <button className="restart-button retry-button" onClick={restartGame}>
                   Restart
                 </button>
               </div>
@@ -557,7 +563,6 @@ function CanvasGame() {
           </div>
 
           {/* bird selection */}
-
           <div className="bird__selection">
             <div
               className="left-arrow arrow-container"
@@ -575,7 +580,6 @@ function CanvasGame() {
               <img src={ProjectImages.ARROW} />
             </div>
           </div>
-
           {/* end of bird selection */}
 
           <div className="speed-btn-container">
