@@ -582,7 +582,6 @@ function CanvasGame() {
             <img src={ProjectImages.BOTTOM_BG} alt="ground" />
           </div>
 
-          {/* bird selection */}
           <div className="bird__selection">
             <div
               className="left-arrow arrow-container"
