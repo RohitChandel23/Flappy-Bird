@@ -305,9 +305,9 @@ function CanvasGame() {
 
     gamePieceRef.current = new Component(
       {
-        width: BIRD_WIDTH, //50
+        width: BIRD_WIDTH,  //50
         height:
-          selectedBird == "BIRD2" || selectedBird == "BIRD3" ? 50 : BIRD_HEIGHT, //40
+          selectedBird == "BIRD2" || selectedBird == "BIRD3" ? 50 : BIRD_HEIGHT,  //40
         x: BIRD_INITIAL_X,
         y: BIRD_INITIAL_Y,
       },
