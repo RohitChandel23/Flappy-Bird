@@ -100,7 +100,6 @@ class Component {
     }
   }
 
-
   update(currentTime: number, lastFlap: number, isPipeCrash: boolean) {
     if (currentTime / 1000 - lastFlap / 1000 > WING_MOVEMENT && !isPipeCrash) {
       currentIdx = (currentIdx + 1) % this.birdFrames.length;
@@ -228,10 +227,11 @@ function CanvasGame() {
   ];
   const [birdIndex, setBirdIndex] = useState(0);
   const [GameSpeed, setGameSpeed] = useState(-2);
-  // const bgImageRef = useRef(ProjectImages.BACKGROUND_IMAGE)
+  const bgImageRef = useRef(ProjectImages.BACKGROUND_IMAGE);
 
   let tempSpeed = pipeSpeed;
   let tempBgSpeed = backgroundSpeed;
+  let scoreCheck = false;
 
   //bird selection
   function birdSelection(arrowType: string) {
@@ -253,6 +253,8 @@ function CanvasGame() {
     coinRef.current = null;
     setIsGameStarted(false);
     hasCrashedRef.current = false;
+    bgImageRef.current = ProjectImages.BACKGROUND_IMAGE
+    scoreCheck = false
   }
 
   function handleSpeed(selectedSpeed: number) {
@@ -305,9 +307,9 @@ function CanvasGame() {
 
     gamePieceRef.current = new Component(
       {
-        width: BIRD_WIDTH,  //50
+        width: BIRD_WIDTH, //50
         height:
-          selectedBird == "BIRD2" || selectedBird == "BIRD3" ? 50 : BIRD_HEIGHT,  //40
+          selectedBird == "BIRD2" || selectedBird == "BIRD3" ? 50 : BIRD_HEIGHT, //40
         x: BIRD_INITIAL_X,
         y: BIRD_INITIAL_Y,
       },
@@ -322,21 +324,23 @@ function CanvasGame() {
     function GameLoop(currentTime: number) {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
       const canvas = canvasRef.current;
-      mainBg.src = ProjectImages.BACKGROUND_IMAGE;
 
-      // if(scoreRef.current % 5 == 0){
-      //   if(bgImageRef.current == ProjectImages.BACKGROUND_IMAGE)
-      //     bgImageRef.current = ProjectImages.BACKGROUND_NIGHT
-      //   else
-      //   bgImageRef.current = ProjectImages.BACKGROUND_IMAGE
-      //   }
+      // mainBg.src = ProjectImages.BACKGROUND_IMAGE;
+      
+      if(scoreRef.current % 5 > 0)
+        scoreCheck = true;
 
-      //   mainBg.src = bgImageRef.current
-
-      // mainBg.src =
-      //   scoreRef.current < 20
-      //     ? ProjectImages.BACKGROUND_IMAGE
-      //     : ProjectImages.BACKGROUND_NIGHT;
+      if (scoreRef.current && scoreRef.current % 5 == 0 && scoreCheck) {
+        if (bgImageRef.current == ProjectImages.BACKGROUND_IMAGE) {
+          bgImageRef.current = ProjectImages.BACKGROUND_NIGHT;
+          console.log("night mode...");
+        } else{
+          bgImageRef.current = ProjectImages.BACKGROUND_IMAGE;
+          console.log("day mode...");
+        }
+        scoreCheck = false;
+      }
+      mainBg.src = bgImageRef.current;
 
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
@@ -543,10 +547,6 @@ function CanvasGame() {
             ref={canvasRef}
             width={CANVAS_WIDTH}
             height={CANVAS_HEIGHT}
-            style={{
-              border: "1px solid #d3d3d3",
-              backgroundColor: "#f1f1f1",
-            }}
             onClick={handleClick}
           />
           <div className="game-score">

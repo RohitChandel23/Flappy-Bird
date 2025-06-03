@@ -1,4 +1,4 @@
-import BACKGROUND_IMAGE from "./icons/bg.png";
+import BACKGROUND_IMAGE from "./icons/background-day.png";
 import BIRD from "./icons/yellowbird-midflap.png";
 import BOTTOM_BG from "./icons/base.png";
 import PIPE_BOTTOM from "./icons/pipe-bottom.png";
