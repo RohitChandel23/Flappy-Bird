@@ -30,7 +30,7 @@ const DOWN_ANGLE = 75;
 const UP_ANGLE = -30;
 const COIN_WIDTH = 55;
 const COIN_HEIGHT = 55;
-const WING_MOVEMENT = 0.1;
+const WING_MOVEMENT = 0.09;
 const DOWN_ROTATION_MOVEMENT = 0.04;
 const PIPE_DISTANCE = 5;
 const COIN_DISTANCE = 23;
@@ -145,7 +145,7 @@ class Component {
 
   hitBottom(canvasHeight: number, hasCrashedRef: any) {
     const bottom = canvasHeight - GROUND_HEIGHT - this.height;
-    if (this.y > bottom ) {
+    if (this.y > bottom) {
       hasCrashedRef.current = true;
     }
   }
@@ -304,8 +304,9 @@ function CanvasGame() {
 
     gamePieceRef.current = new Component(
       {
-        width:  BIRD_WIDTH,    //50
-        height: (selectedBird == "BIRD2" || selectedBird == "BIRD3") ? 50 : BIRD_HEIGHT,  //40
+        width: BIRD_WIDTH, //50
+        height:
+          selectedBird == "BIRD2" || selectedBird == "BIRD3" ? 50 : BIRD_HEIGHT, //40
         x: BIRD_INITIAL_X,
         y: BIRD_INITIAL_Y,
       },
@@ -320,14 +321,14 @@ function CanvasGame() {
     function GameLoop(currentTime: number) {
       const deltaTime = currentTime / 1000 - lastTime / 1000;
       const canvas = canvasRef.current;
-       mainBg.src = ProjectImages.BACKGROUND_IMAGE;
+      mainBg.src = ProjectImages.BACKGROUND_IMAGE;
 
       // if(scoreRef.current % 5 == 0){
       //   if(bgImageRef.current == ProjectImages.BACKGROUND_IMAGE)
       //     bgImageRef.current = ProjectImages.BACKGROUND_NIGHT
       //   else
       //   bgImageRef.current = ProjectImages.BACKGROUND_IMAGE
-      //   } 
+      //   }
 
       //   mainBg.src = bgImageRef.current
 
