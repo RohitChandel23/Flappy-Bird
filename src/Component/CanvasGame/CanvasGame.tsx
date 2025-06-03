@@ -100,6 +100,7 @@ class Component {
     }
   }
 
+
   update(currentTime: number, lastFlap: number, isPipeCrash: boolean) {
     if (currentTime / 1000 - lastFlap / 1000 > WING_MOVEMENT && !isPipeCrash) {
       currentIdx = (currentIdx + 1) % this.birdFrames.length;
