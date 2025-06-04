@@ -327,7 +327,7 @@ function CanvasGame() {
 
       // mainBg.src = ProjectImages.BACKGROUND_IMAGE;
       
-      if(scoreRef.current % 5 > 0)
+      if(scoreRef.current % 20 > 0)
         scoreCheck = true;
 
       if (scoreRef.current && scoreRef.current % 20 == 0 && scoreCheck) {
