@@ -330,7 +330,7 @@ function CanvasGame() {
       if(scoreRef.current % 5 > 0)
         scoreCheck = true;
 
-      if (scoreRef.current && scoreRef.current % 5 == 0 && scoreCheck) {
+      if (scoreRef.current && scoreRef.current % 20 == 0 && scoreCheck) {
         if (bgImageRef.current == ProjectImages.BACKGROUND_IMAGE) {
           bgImageRef.current = ProjectImages.BACKGROUND_NIGHT;
           console.log("night mode...");
